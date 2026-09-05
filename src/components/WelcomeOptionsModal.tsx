@@ -41,7 +41,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-      <div className="bg-[#121217] border border-amber-300/30 rounded-3xl p-6 sm:p-8 max-w-md w-full relative shadow-2xl text-center">
+      <div className="bg-[#180A30] border border-purple-500/35 rounded-3xl p-6 sm:p-8 max-w-md w-full relative shadow-2xl text-center">
         {/* Close Button */}
         <button
           onClick={() => {
@@ -56,7 +56,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
 
         {!timerActive ? (
           <div>
-            <div className="w-16 h-16 rounded-full bg-amber-300/20 text-amber-200 flex items-center justify-center text-3xl mx-auto mb-4">
+            <div className="w-16 h-16 rounded-full bg-purple-500/20 text-pink-300 flex items-center justify-center text-3xl mx-auto mb-4 border border-purple-500/30">
               📞
             </div>
             <h3 className="font-serif font-light text-3xl text-white mb-2">Request 2-Min Call</h3>
@@ -73,7 +73,7 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
                   placeholder="e.g. Rahul Sharma"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder:text-white/30 text-[14px] focus:outline-none focus:border-amber-300"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-purple-500/25 text-white placeholder:text-white/30 text-[14px] focus:outline-none focus:border-pink-500"
                 />
               </div>
               <div>
@@ -84,20 +84,20 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
                   placeholder="+91 98765 43210"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder:text-white/30 text-[14px] focus:outline-none focus:border-amber-300"
+                  className="w-full px-4 py-3 rounded-xl bg-white/5 border border-purple-500/25 text-white placeholder:text-white/30 text-[14px] focus:outline-none focus:border-pink-500"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-[#E2C08D] hover:bg-[#eddcb8] text-[#09090C] font-semibold text-[14px] transition-all mt-2 shadow-lg">
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:brightness-110 text-white font-semibold text-[14px] transition-all mt-2 shadow-lg shadow-purple-600/30">
                 Call Me in 2 Minutes →
               </button>
             </form>
           </div>
         ) : (
           <div className="py-6">
-            <div className="w-20 h-20 rounded-full bg-amber-300/20 border-2 border-amber-300 text-amber-200 flex items-center justify-center text-4xl mx-auto mb-6 animate-pulse">
+            <div className="w-20 h-20 rounded-full bg-pink-500/20 border-2 border-pink-500 text-pink-300 flex items-center justify-center text-4xl mx-auto mb-6 animate-pulse">
               📲
             </div>
             <h3 className="font-serif text-3xl text-white mb-2">Calling You Now...</h3>
@@ -105,13 +105,13 @@ export default function CallbackModal({ isOpen, onClose }: CallbackModalProps) {
               We are dialing <strong className="text-white">{phone}</strong>. Please keep your phone nearby.
             </p>
 
-            <div className="font-mono text-5xl text-amber-200 font-bold tracking-tight mb-4">
+            <div className="font-mono text-5xl text-pink-300 font-bold tracking-tight mb-4">
               {formatTime(timeLeft)}
             </div>
 
             <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden mb-6">
               <div
-                className="h-full bg-amber-300 transition-all duration-1000"
+                className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-1000"
                 style={{ width: `${(timeLeft / 120) * 100}%` }}
               />
             </div>

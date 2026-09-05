@@ -113,13 +113,11 @@ function About({ setPage }: { setPage: (p: string) => void }) {
     </div>
   );
 }
-
-/* ── Ambient luxury lighting backdrop ────────────── */
 function AmbientBackdrop() {
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 bg-[#09090C]" aria-hidden="true">
-      <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[160px]" />
-      <div className="absolute top-1/2 -right-40 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[160px]" />
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 bg-[#0E051D]" aria-hidden="true">
+      <div className="absolute -top-40 -left-40 w-[700px] h-[700px] bg-purple-600/15 rounded-full blur-[180px]" />
+      <div className="absolute top-1/2 -right-40 w-[600px] h-[600px] bg-pink-600/12 rounded-full blur-[180px]" />
     </div>
   );
 }
@@ -168,7 +166,7 @@ export default function App() {
   const Component = ROUTES[page] ?? ROUTES.home;
 
   return (
-    <div className="relative min-h-screen bg-[#09090C] text-[#F4F4F6]">
+    <div className="relative min-h-screen bg-[#0E051D] text-[#F8F5FF]">
       <AmbientBackdrop />
 
       {/* 2-Min Live Callback Dialog */}
@@ -192,7 +190,7 @@ export default function App() {
       </div>
 
       {/* Floating Sticky 3-Option Bar */}
-      <div className="fixed bottom-6 right-6 z-40 flex items-center gap-2 p-1.5 rounded-full bg-[#121217]/95 border border-amber-300/30 backdrop-blur-xl shadow-2xl">
+      <div className="fixed bottom-6 right-6 z-40 flex items-center gap-2 p-1.5 rounded-full bg-[#180A30]/95 border border-purple-500/30 backdrop-blur-xl shadow-2xl shadow-purple-950/50">
         <button
           onClick={() => navigate("whatsapp")}
           className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 text-[12px] font-medium transition-all">
@@ -200,7 +198,7 @@ export default function App() {
         </button>
         <button
           onClick={() => setCallbackModalOpen(true)}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-300/20 text-amber-200 hover:bg-amber-300/30 text-[12px] font-medium transition-all">
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:brightness-110 text-[12px] font-semibold transition-all shadow-md">
           <span>📞 Call Me in 2 Min</span>
         </button>
         <button

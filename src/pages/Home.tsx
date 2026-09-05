@@ -163,7 +163,7 @@ export default function Home({ setPage }: HomeProps) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#09090C] text-[#F4F4F6] font-sans antialiased selection:bg-amber-400/20">
+    <div className="min-h-screen bg-[#0E051D] text-[#F8F5FF] font-sans antialiased selection:bg-purple-500/30">
 
       {/* ════════════════════════════════ HERO SECTION ═══ */}
       <section ref={heroRef} className="relative min-h-[88vh] flex items-center justify-center overflow-hidden pt-24 pb-20 px-6">
@@ -174,29 +174,29 @@ export default function Home({ setPage }: HomeProps) {
             src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1920&q=85&fit=crop"
             alt="Event decor hall setting"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#09090C] via-[#09090C]/65 to-[#09090C]/40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#09090C]/80 via-transparent to-[#09090C]/80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0E051D] via-[#0E051D]/70 to-[#0E051D]/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0E051D]/80 via-transparent to-[#0E051D]/80" />
         </div>
 
-        {/* Ambient Subtle Lighting */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[550px] h-[550px] bg-amber-500/5 rounded-full blur-[140px] pointer-events-none" />
+        {/* Ambient Subtle Purple Glow */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[650px] h-[650px] bg-purple-600/12 rounded-full blur-[150px] pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           {/* Subtle Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.03] border border-amber-300/20 backdrop-blur-md mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#E2C08D]" />
-            <span className="text-[10.5px] font-medium tracking-[0.2em] text-amber-200 uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-purple-500/30 backdrop-blur-md mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+            <span className="text-[10.5px] font-medium tracking-[0.2em] text-pink-200 uppercase">
               Event Management & Planning · Live in Bangalore & 14 Cities
             </span>
           </div>
 
           {/* Simple Headline */}
           <h1 className="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight mb-8 text-white">
-            Plan Your Event<br />
-            <span className="italic font-normal text-amber-200/90 font-serif">In One Place</span>
+            Plan Your <span className="italic font-normal bg-gradient-to-r from-purple-300 via-pink-300 to-amber-200 bg-clip-text text-transparent">Events</span><br />
+            In One Place
           </h1>
 
-          <p className="text-white/65 text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed mb-12">
+          <p className="text-white/70 text-base md:text-lg font-light max-w-xl mx-auto leading-relaxed mb-12">
             Book top venues, trusted vendors, event staff, and manage your full budget easily — all in one platform.
           </p>
 
@@ -204,8 +204,8 @@ export default function Home({ setPage }: HomeProps) {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => setPage("booking")}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#E2C08D] hover:bg-[#eddcb8] text-[#09090C] font-medium text-[13.5px] tracking-wide shadow-lg transition-all flex items-center justify-center gap-2">
-              <span>Plan My Event</span>
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:brightness-110 text-white font-semibold text-[14px] tracking-wide shadow-xl shadow-purple-600/30 transition-all flex items-center justify-center gap-2">
+              <span>Request A Proposal</span>
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M3 8h10M9 4l4 4-4 4" />
               </svg>
@@ -213,43 +213,43 @@ export default function Home({ setPage }: HomeProps) {
 
             <button
               onClick={() => setPage("venues")}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 text-white font-medium text-[13.5px] tracking-wide backdrop-blur-md transition-all">
-              Browse Venues
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/[0.05] hover:bg-purple-500/15 border border-purple-500/30 text-white font-medium text-[14px] tracking-wide backdrop-blur-md transition-all">
+              Our Work
             </button>
           </div>
 
-          {/* Simple Metric Badges */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 pt-10 border-t border-white/10 text-left">
+          {/* Metric Badges */}
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 pt-10 border-t border-purple-500/20 text-left">
             <div>
-              <div className="font-mono text-2xl text-amber-200 font-medium">12,000+</div>
-              <div className="text-white/45 text-[11px] uppercase tracking-wider mt-1 font-sans">Events Done</div>
+              <div className="font-mono text-2xl text-pink-300 font-medium">12,000+</div>
+              <div className="text-white/50 text-[11px] uppercase tracking-wider mt-1 font-sans">Events Done</div>
             </div>
             <div>
-              <div className="font-mono text-2xl text-amber-200 font-medium">500+</div>
-              <div className="text-white/45 text-[11px] uppercase tracking-wider mt-1 font-sans">Verified Venues</div>
+              <div className="font-mono text-2xl text-pink-300 font-medium">500+</div>
+              <div className="text-white/50 text-[11px] uppercase tracking-wider mt-1 font-sans">Verified Venues</div>
             </div>
             <div>
-              <div className="font-mono text-2xl text-amber-200 font-medium">14 Cities</div>
-              <div className="text-white/45 text-[11px] uppercase tracking-wider mt-1 font-sans">Active Locations</div>
+              <div className="font-mono text-2xl text-pink-300 font-medium">14 Cities</div>
+              <div className="text-white/50 text-[11px] uppercase tracking-wider mt-1 font-sans">Active Locations</div>
             </div>
             <div>
-              <div className="font-mono text-2xl text-amber-200 font-medium">99.4%</div>
-              <div className="text-white/45 text-[11px] uppercase tracking-wider mt-1 font-sans">Happy Clients</div>
+              <div className="font-mono text-2xl text-pink-300 font-medium">99.4%</div>
+              <div className="text-white/50 text-[11px] uppercase tracking-wider mt-1 font-sans">Happy Clients</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ════════════════════════════════ SERVICES ═══ */}
-      <section className="py-24 px-6 max-w-[1440px] mx-auto border-t border-white/10">
+      <section className="py-24 px-6 max-w-[1440px] mx-auto border-t border-purple-500/20">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <span className="text-[10.5px] font-semibold text-amber-300 uppercase tracking-[0.25em]">What We Provide</span>
+            <span className="text-[10.5px] font-semibold text-pink-400 uppercase tracking-[0.25em]">What We Provide</span>
             <h2 className="font-serif font-light text-4xl md:text-5xl text-white mt-2">
               Everything for Your Event
             </h2>
           </div>
-          <p className="text-white/55 text-[14px] max-w-md leading-relaxed">
+          <p className="text-white/60 text-[14px] max-w-md leading-relaxed">
             From venue booking to catering, flower decor, photography, and managers — we arrange everything for you.
           </p>
         </div>
@@ -259,7 +259,7 @@ export default function Home({ setPage }: HomeProps) {
             <div
               key={service.id}
               onClick={() => setPage(service.page)}
-              className="group relative rounded-2xl overflow-hidden bg-[#0F0F13] border border-white/10 hover:border-amber-300/30 transition-all duration-300 cursor-pointer flex flex-col justify-between">
+              className="group relative rounded-2xl overflow-hidden bg-[#170A2D] border border-purple-500/20 hover:border-pink-500/40 transition-all duration-300 cursor-pointer flex flex-col justify-between shadow-lg">
               <div className="relative h-60 overflow-hidden">
                 <img
                   src={service.img}
@@ -269,26 +269,26 @@ export default function Home({ setPage }: HomeProps) {
                   }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F13] via-[#0F0F13]/20 to-transparent" />
-                <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-medium tracking-wider uppercase bg-black/60 text-amber-200 border border-amber-300/20 backdrop-blur-md">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#170A2D] via-[#170A2D]/20 to-transparent" />
+                <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-medium tracking-wider uppercase bg-black/60 text-pink-300 border border-purple-500/30 backdrop-blur-md">
                   {service.tag}
                 </span>
               </div>
 
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-serif text-2xl text-white group-hover:text-amber-200 transition-colors mb-1 font-normal">
+                  <h3 className="font-serif text-2xl text-white group-hover:text-pink-300 transition-colors mb-1 font-normal">
                     {service.title}
                   </h3>
-                  <p className="text-amber-200/80 text-[11.5px] font-medium tracking-wide mb-2.5">
+                  <p className="text-purple-300/90 text-[11.5px] font-medium tracking-wide mb-2.5">
                     {service.subtitle}
                   </p>
-                  <p className="text-white/50 text-[13px] leading-relaxed">
+                  <p className="text-white/55 text-[13px] leading-relaxed">
                     {service.desc}
                   </p>
                 </div>
 
-                <div className="mt-5 flex items-center gap-2 text-[12px] font-medium text-amber-300 group-hover:translate-x-1 transition-transform">
+                <div className="mt-5 flex items-center gap-2 text-[12px] font-medium text-pink-400 group-hover:translate-x-1 transition-transform">
                   <span>Explore Service</span>
                   <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                     <path d="M2 7h10M8 3l4 4-4 4" />
@@ -301,24 +301,24 @@ export default function Home({ setPage }: HomeProps) {
       </section>
 
       {/* ════════════════ BUDGET CALCULATOR ═══ */}
-      <section className="py-24 px-6 bg-[#0B0B0E] border-y border-white/10 relative overflow-hidden">
+      <section className="py-24 px-6 bg-[#130728] border-y border-purple-500/20 relative overflow-hidden">
         <div className="max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
 
             {/* Left Column: Controls */}
             <div className="lg:col-span-5">
-              <span className="text-[10.5px] font-semibold text-amber-300 uppercase tracking-[0.25em]">Budget Estimator</span>
+              <span className="text-[10.5px] font-semibold text-pink-400 uppercase tracking-[0.25em]">Budget Estimator</span>
               <h2 className="font-serif font-light text-4xl md:text-5xl text-white mt-2 mb-3">
                 Event Cost Calculator
               </h2>
-              <p className="text-white/55 text-[14px] leading-relaxed mb-8">
+              <p className="text-white/60 text-[14px] leading-relaxed mb-8">
                 Select your event details to see a live breakdown of your estimated expenses across venue, food, decor, stage, and staff.
               </p>
 
               {/* Event Type Toggle */}
               <div className="mb-6">
-                <label className="block text-[11px] uppercase tracking-wider text-white/45 mb-2 font-medium">Event Type</label>
-                <div className="grid grid-cols-3 gap-1.5 p-1 bg-[#14141A] border border-white/10 rounded-full">
+                <label className="block text-[11px] uppercase tracking-wider text-white/50 mb-2 font-medium">Event Type</label>
+                <div className="grid grid-cols-3 gap-1.5 p-1 bg-[#1F0E3D] border border-purple-500/30 rounded-full">
                   {[
                     { id: "wedding", label: "Wedding" },
                     { id: "gala", label: "Party / Gala" },
@@ -329,7 +329,7 @@ export default function Home({ setPage }: HomeProps) {
                       onClick={() => setEventVision(item.id)}
                       className={`py-2 px-3 rounded-full text-[12px] font-medium transition-all ${
                         eventVision === item.id
-                          ? "bg-[#E2C08D] text-[#09090C] shadow-sm"
+                          ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-sm"
                           : "text-white/60 hover:text-white"
                       }`}>
                       {item.label}
@@ -339,10 +339,10 @@ export default function Home({ setPage }: HomeProps) {
               </div>
 
               {/* Guest Count Slider */}
-              <div className="mb-7 bg-[#14141A] border border-white/10 rounded-2xl p-5">
+              <div className="mb-7 bg-[#1F0E3D] border border-purple-500/30 rounded-2xl p-5">
                 <div className="flex justify-between items-center mb-3">
-                  <label className="text-[11px] uppercase tracking-wider text-white/45 font-medium">Guest Count</label>
-                  <span className="font-mono text-lg text-amber-200 font-medium">{guestCount} Guests</span>
+                  <label className="text-[11px] uppercase tracking-wider text-white/50 font-medium">Guest Count</label>
+                  <span className="font-mono text-lg text-pink-300 font-medium">{guestCount} Guests</span>
                 </div>
                 <input
                   type="range"
@@ -351,13 +351,13 @@ export default function Home({ setPage }: HomeProps) {
                   step="25"
                   value={guestCount}
                   onChange={(e) => setGuestCount(Number(e.target.value))}
-                  className="w-full accent-[#E2C08D] h-1.5 bg-white/10 rounded-lg cursor-pointer"
+                  className="w-full accent-pink-500 h-1.5 bg-white/10 rounded-lg cursor-pointer"
                 />
               </div>
 
               {/* Venue Style Toggle */}
               <div className="mb-8">
-                <label className="block text-[11px] uppercase tracking-wider text-white/45 mb-2 font-medium">Venue Style</label>
+                <label className="block text-[11px] uppercase tracking-wider text-white/50 mb-2 font-medium">Venue Style</label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     { id: "heritage", label: "Palace / Resort" },
@@ -369,8 +369,8 @@ export default function Home({ setPage }: HomeProps) {
                       onClick={() => setVenueStyle(style.id)}
                       className={`p-3 rounded-xl text-left border text-[12px] transition-all ${
                         venueStyle === style.id
-                          ? "border-amber-300/60 bg-amber-300/10 text-amber-200 font-medium"
-                          : "border-white/10 bg-[#14141A] text-white/60 hover:border-white/20"
+                          ? "border-pink-500/60 bg-pink-500/15 text-pink-200 font-medium"
+                          : "border-purple-500/20 bg-[#1F0E3D] text-white/60 hover:border-purple-500/40"
                       }`}>
                       <div className="font-medium text-white mb-0.5">{style.label}</div>
                       <div className="text-[10px] text-white/40 font-normal">Option</div>
@@ -381,21 +381,21 @@ export default function Home({ setPage }: HomeProps) {
 
               <button
                 onClick={() => setPage("booking")}
-                className="w-full py-3.5 rounded-full bg-[#E2C08D] hover:bg-[#eddcb8] text-[#09090C] font-medium text-[13.5px] transition-all">
+                className="w-full py-3.5 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 hover:brightness-110 text-white font-semibold text-[13.5px] transition-all shadow-lg shadow-purple-600/30">
                 Get Detailed Quote →
               </button>
             </div>
 
             {/* Right Column: Clean Breakdown Card */}
-            <div className="lg:col-span-7 bg-[#121217] border border-white/10 rounded-2xl p-7 md:p-9 shadow-xl">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-6 mb-6">
+            <div className="lg:col-span-7 bg-[#1A0A35] border border-purple-500/30 rounded-2xl p-7 md:p-9 shadow-2xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-purple-500/20 pb-6 mb-6">
                 <div>
-                  <div className="text-[10.5px] uppercase tracking-[0.2em] text-amber-300 font-semibold mb-1">Estimated Total Budget</div>
+                  <div className="text-[10.5px] uppercase tracking-[0.2em] text-pink-300 font-semibold mb-1">Estimated Total Budget</div>
                   <div className="font-mono text-4xl text-white font-medium tracking-tight">₹{(totalBudget / 100000).toFixed(2)} Lakhs</div>
                 </div>
                 <div className="mt-4 sm:mt-0 text-right">
                   <div className="text-[11.5px] text-white/40">Cost Per Guest</div>
-                  <div className="font-mono text-base text-amber-200 font-medium">₹{Math.round(totalBudget / guestCount).toLocaleString()}</div>
+                  <div className="font-mono text-base text-pink-300 font-medium">₹{Math.round(totalBudget / guestCount).toLocaleString()}</div>
                 </div>
               </div>
 
@@ -410,12 +410,12 @@ export default function Home({ setPage }: HomeProps) {
                 ].map((item) => (
                   <div key={item.label} className="space-y-1.5">
                     <div className="flex justify-between items-center text-[13px]">
-                      <span className="text-white/75 font-normal">{item.label}</span>
-                      <span className="font-mono text-amber-200 font-medium">₹{(item.cost / 100000).toFixed(2)}L <span className="text-white/40 text-[11px]">({item.pct}%)</span></span>
+                      <span className="text-white/80 font-normal">{item.label}</span>
+                      <span className="font-mono text-pink-300 font-medium">₹{(item.cost / 100000).toFixed(2)}L <span className="text-white/40 text-[11px]">({item.pct}%)</span></span>
                     </div>
                     <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-amber-300/80 to-amber-500 rounded-full transition-all duration-300"
+                        className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300"
                         style={{ width: `${item.pct}%` }}
                       />
                     </div>
@@ -423,7 +423,7 @@ export default function Home({ setPage }: HomeProps) {
                 ))}
               </div>
 
-              <div className="mt-8 pt-5 border-t border-white/10 flex items-center justify-between text-white/45 text-[11.5px]">
+              <div className="mt-8 pt-5 border-t border-purple-500/20 flex items-center justify-between text-white/50 text-[11.5px]">
                 <span>✓ Verified live vendor market rates</span>
                 <span>Includes taxes & fees</span>
               </div>
@@ -437,14 +437,14 @@ export default function Home({ setPage }: HomeProps) {
       <section className="py-24 px-6 max-w-[1440px] mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-4">
           <div>
-            <span className="text-[10.5px] font-semibold text-amber-300 uppercase tracking-[0.25em]">Bangalore & Nearby</span>
+            <span className="text-[10.5px] font-semibold text-pink-400 uppercase tracking-[0.25em]">Bangalore & Nearby</span>
             <h2 className="font-serif font-light text-4xl md:text-5xl text-white mt-2">
               Featured Venues
             </h2>
           </div>
           <button
             onClick={() => setPage("venues")}
-            className="text-[13px] font-medium text-amber-300 hover:text-amber-200 flex items-center gap-2 transition-colors">
+            className="text-[13px] font-medium text-pink-300 hover:text-pink-200 flex items-center gap-2 transition-colors">
             <span>View All Venues</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M2 7h10M8 3l4 4-4 4" />
@@ -457,30 +457,30 @@ export default function Home({ setPage }: HomeProps) {
             <div
               key={estate.name}
               onClick={() => setPage("venues")}
-              className="group bg-[#0F0F13] rounded-2xl overflow-hidden border border-white/10 hover:border-amber-300/30 transition-all duration-300 cursor-pointer">
+              className="group bg-[#170A2D] rounded-2xl overflow-hidden border border-purple-500/20 hover:border-pink-500/40 transition-all duration-300 cursor-pointer shadow-lg">
               <div className="relative h-52 overflow-hidden">
                 <img
                   src={estate.img}
                   alt={estate.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F13] via-transparent to-transparent" />
-                <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-medium uppercase tracking-wider bg-black/60 text-amber-200 border border-amber-300/20 backdrop-blur-md">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#170A2D] via-transparent to-transparent" />
+                <span className="absolute top-3 left-3 px-3 py-1 rounded-full text-[10px] font-medium uppercase tracking-wider bg-black/60 text-pink-300 border border-purple-500/30 backdrop-blur-md">
                   {estate.badge}
                 </span>
-                <span className="absolute bottom-3 right-3 font-mono text-[12px] font-medium text-amber-300 bg-black/70 px-2.5 py-1 rounded-md backdrop-blur-md">
+                <span className="absolute bottom-3 right-3 font-mono text-[12px] font-medium text-pink-300 bg-black/70 px-2.5 py-1 rounded-md backdrop-blur-md">
                   {estate.price}
                 </span>
               </div>
 
               <div className="p-5">
-                <h3 className="font-serif font-normal text-xl text-white group-hover:text-amber-200 transition-colors mb-1">
+                <h3 className="font-serif font-normal text-xl text-white group-hover:text-pink-300 transition-colors mb-1">
                   {estate.name}
                 </h3>
-                <p className="text-white/45 text-[12px] mb-3">📍 {estate.location} · {estate.category}</p>
-                <div className="flex items-center justify-between text-[12px] pt-3 border-t border-white/10 text-white/60 font-sans">
+                <p className="text-white/50 text-[12px] mb-3">📍 {estate.location} · {estate.category}</p>
+                <div className="flex items-center justify-between text-[12px] pt-3 border-t border-purple-500/20 text-white/60 font-sans">
                   <span>👥 {estate.guests}</span>
-                  <span className="text-amber-300 font-medium">★ {estate.rating}</span>
+                  <span className="text-pink-300 font-medium">★ {estate.rating}</span>
                 </div>
               </div>
             </div>
@@ -489,14 +489,14 @@ export default function Home({ setPage }: HomeProps) {
       </section>
 
       {/* ════════════════ CLIENT REVIEWS ═══ */}
-      <section className="py-24 px-6 bg-[#0B0B0E] border-t border-white/10">
+      <section className="py-24 px-6 bg-[#130728] border-t border-purple-500/20">
         <div className="max-w-3xl mx-auto text-center">
-          <span className="text-[10.5px] font-semibold text-amber-300 uppercase tracking-[0.25em]">Customer Reviews</span>
+          <span className="text-[10.5px] font-semibold text-pink-400 uppercase tracking-[0.25em]">Customer Reviews</span>
           <h2 className="font-serif font-light text-4xl md:text-5xl text-white mt-2 mb-10">
             What Our Clients Say
           </h2>
 
-          <div className="bg-[#121217] border border-white/10 rounded-2xl p-8 md:p-10 relative">
+          <div className="bg-[#1A0A35] border border-purple-500/30 rounded-2xl p-8 md:p-10 relative shadow-2xl">
             <p className="font-serif font-light italic text-xl md:text-2xl text-white/90 leading-relaxed mb-8">
               &ldquo;{clientStories[activeStory].quote}&rdquo;
             </p>
@@ -505,11 +505,11 @@ export default function Home({ setPage }: HomeProps) {
               <img
                 src={clientStories[activeStory].img}
                 alt={clientStories[activeStory].author}
-                className="w-12 h-12 rounded-full object-cover border border-amber-300/40"
+                className="w-12 h-12 rounded-full object-cover border border-purple-500/40"
               />
               <div className="text-left">
                 <div className="font-medium text-base text-white">{clientStories[activeStory].author}</div>
-                <div className="text-white/45 text-[12px]">{clientStories[activeStory].event}</div>
+                <div className="text-white/50 text-[12px]">{clientStories[activeStory].event}</div>
               </div>
             </div>
 
@@ -520,7 +520,7 @@ export default function Home({ setPage }: HomeProps) {
                   key={idx}
                   onClick={() => setActiveStory(idx)}
                   className={`h-1.5 rounded-full transition-all ${
-                    activeStory === idx ? "w-6 bg-[#E2C08D]" : "w-1.5 bg-white/20 hover:bg-white/40"
+                    activeStory === idx ? "w-6 bg-pink-500" : "w-1.5 bg-white/20 hover:bg-white/40"
                   }`}
                 />
               ))}
@@ -530,11 +530,11 @@ export default function Home({ setPage }: HomeProps) {
       </section>
 
       {/* ════════════════ FOOTER ═══ */}
-      <footer className="border-t border-white/10 py-14 px-6 bg-[#09090C]">
-        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-white/45 text-[12.5px]">
+      <footer className="border-t border-purple-500/20 py-14 px-6 bg-[#0E051D]">
+        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-white/50 text-[12.5px]">
           <div>
             <span className="font-serif text-lg text-white">EVENTTRUST</span>
-            <span className="ml-3 text-[10px] uppercase tracking-widest text-amber-300/80">Event Management</span>
+            <span className="ml-3 text-[10px] uppercase tracking-widest text-pink-300">Event Management</span>
           </div>
           <div className="flex gap-7">
             <button onClick={() => setPage("venues")} className="hover:text-white transition-colors">Venues</button>

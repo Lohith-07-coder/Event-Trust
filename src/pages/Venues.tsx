@@ -151,10 +151,10 @@ export default function Venues() {
   );
 
   return (
-    <div className="min-h-screen pt-24 pb-20 bg-[#09090C] text-[#F4F4F6]">
+    <div className="min-h-screen pt-24 pb-20 bg-[#0E051D] text-[#F8F5FF]">
       {/* Header */}
       <div className="px-6 max-w-[1440px] mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-200 text-[11px] font-medium uppercase tracking-[0.2em] mb-3">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-pink-300 text-[11px] font-medium uppercase tracking-[0.2em] mb-3">
           Prime Locations · Featuring Bangalore Estates
         </div>
         <h1 className="font-serif font-light text-4xl md:text-6xl text-white mb-2">
@@ -168,7 +168,7 @@ export default function Venues() {
       <div className="px-6 max-w-[1440px] mx-auto flex gap-8 flex-col lg:flex-row">
         {/* Filters sidebar */}
         <div className="lg:w-80 shrink-0 space-y-5">
-          <div className="bg-[#111116] rounded-2xl p-6 border border-white/10">
+          <div className="bg-[#170A2D] rounded-2xl p-6 border border-purple-500/25 shadow-xl">
             <h3 className="font-serif text-xl font-normal text-white mb-5">Refine Estates</h3>
 
             {/* City Selection */}
@@ -181,8 +181,8 @@ export default function Venues() {
                     onClick={() => setCity(c)}
                     className={`px-3 py-1.5 rounded-full text-[12px] font-medium transition-all ${
                       city === c
-                        ? "bg-[#E2C08D] text-[#09090C]"
-                        : "bg-white/5 border border-white/10 text-white/60 hover:text-white"
+                        ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md"
+                        : "bg-white/5 border border-purple-500/20 text-white/60 hover:text-white"
                     }`}>
                     {c} {c === "Bangalore" ? "📍" : ""}
                   </button>
@@ -200,8 +200,8 @@ export default function Venues() {
                     onClick={() => setType(t)}
                     className={`px-3 py-1.5 rounded-full text-[12px] font-medium transition-all ${
                       type === t
-                        ? "bg-[#E2C08D] text-[#09090C]"
-                        : "bg-white/5 border border-white/10 text-white/60 hover:text-white"
+                        ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md"
+                        : "bg-white/5 border border-purple-500/20 text-white/60 hover:text-white"
                     }`}>
                     {t}
                   </button>
