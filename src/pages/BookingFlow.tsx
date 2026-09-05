@@ -25,22 +25,26 @@ const SERVICES = [
 ];
 
 const STEPS  = ["Event Type","Date & Time","Guest Count","Budget","Services","Booking Type","Confirm"];
-const COLORS = ["#6A38FF","#8B5CF6","#0EA5E9","#10B981","#F59E0B","#EF4444","#EC4899","#D4AF37"];
+const COLORS = ["#B89B5E","#E8C98A","#10B981","#0EA5E9","#F59E0B","#8B5CF6","#EF4444","#D4AF37"];
 
 /* ─── Step Indicator ────────────────────────────── */
-function StepBar({ step }: { step: number }) {
+function StepBar({ step, isLightMode = false }: { step: number; isLightMode?: boolean }) {
   return (
     <div className="mb-10">
       {/* Progress track */}
-      <div className="relative h-1 bg-white/8 rounded-full mb-4 overflow-hidden">
-        <div className="absolute inset-y-0 left-0 rounded-full progress-bar transition-all duration-600"
+      <div className={`relative h-1.5 rounded-full mb-4 overflow-hidden ${isLightMode ? "bg-[#DED9CF]" : "bg-white/8"}`}>
+        <div className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#E8C98A] to-[#B89B5E] transition-all duration-600"
           style={{ width:`${((step + 1) / STEPS.length) * 100}%` }} />
       </div>
       {/* Step labels */}
-      <div className="flex justify-between text-[11px] text-white/30 overflow-x-auto gap-1">
+      <div className="flex justify-between text-[11px] font-bold overflow-x-auto gap-1">
         {STEPS.map((s, i) => (
           <span key={s} className={`whitespace-nowrap transition-colors ${
-            i === step ? "text-purple-400 font-semibold" : i < step ? "text-green-400" : ""
+            i === step 
+              ? (isLightMode ? "text-[#B89B5E] font-bold" : "text-[#E8C98A] font-semibold") 
+              : i < step 
+                ? "text-emerald-600" 
+                : (isLightMode ? "text-[#6F6B66]" : "text-white/30")
           }`}>
             {i < step ? "✓ " : ""}{s}
           </span>
@@ -54,15 +58,15 @@ function StepBar({ step }: { step: number }) {
 function ChartTooltip({ active, payload }: { active?: boolean; payload?: Array<{ name: string; value: number }> }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="glass-strong rounded-xl px-3 py-2 text-[12px] border border-white/15">
-      <div className="font-semibold text-white">{payload[0].name}</div>
-      <div className="text-purple-300">₹{(payload[0].value / 1000).toFixed(0)}K</div>
+    <div className="bg-[#111116] text-white rounded-xl px-3 py-2 text-[12px] border border-white/10 shadow-lg">
+      <div className="font-semibold">{payload[0].name}</div>
+      <div className="text-[#E8C98A] font-bold">₹{(payload[0].value / 1000).toFixed(0)}K</div>
     </div>
   );
 }
 
-/* ─── Main ──────────────────────────────────────── */
-export default function BookingFlow() {
+/* ─── Main Component ─────────────────────────────── */
+export default function BookingFlow({ isLightMode = false }: { isLightMode?: boolean }) {
   const [step,     setStep]     = useState(0);
   const [eventType, setType]    = useState("");
   const [date,      setDate]    = useState("");
@@ -87,21 +91,29 @@ export default function BookingFlow() {
 
   if (confirmed) {
     return (
-      <div className="min-h-screen pt-24 pb-20 px-6 flex items-center justify-center">
-        <div className="glass rounded-3xl p-12 border border-green-500/30 text-center max-w-md animate-scale-in">
-          <div className="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl mb-6 glow-green"
-            style={{ background:"linear-gradient(135deg,#10B981,#059669)" }}>✅</div>
-          <h2 className="font-display font-700 text-2xl text-white mb-3">Event Booked!</h2>
-          <p className="text-white/55 text-[14px] mb-2">
-            Your <strong className="text-white">{eventType}</strong> on <strong className="text-white">{date || "TBD"}</strong> is confirmed.
+      <div className={`min-h-screen pt-12 pb-20 px-6 flex items-center justify-center transition-colors duration-300 ${
+        isLightMode ? "bg-[#F7F4EE] text-[#111116]" : "bg-[#0B0B14] text-[#F7F4EE]"
+      }`}>
+        <div className={`rounded-3xl p-12 border text-center max-w-md animate-scale-in ${
+          isLightMode ? "bg-white border-[#DED9CF] shadow-lg text-[#111116]" : "bg-[#151522] border-white/10 text-white"
+        }`}>
+          <div className="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl mb-6 shadow-md"
+            style={{ background:"linear-gradient(135deg, #E8C98A, #B89B5E)" }}>✅</div>
+          <h2 className="font-serif font-bold text-3xl mb-3">Event Booked!</h2>
+          <p className={`text-[14px] mb-2 font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/60"}`}>
+            Your <strong className={isLightMode ? "text-[#111116]" : "text-white"}>{eventType}</strong> on <strong className={isLightMode ? "text-[#111116]" : "text-white"}>{date || "TBD"}</strong> is confirmed.
           </p>
-          <p className="text-white/40 text-[13px] mb-8">Booking ID: <span className="font-mono text-purple-300">EVT-{Date.now().toString().slice(-6)}</span></p>
+          <p className={`text-[13px] mb-8 font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>
+            Booking ID: <span className="font-mono font-bold text-[#B89B5E]">EVT-{Date.now().toString().slice(-6)}</span>
+          </p>
           <div className="flex gap-3">
             <button onClick={() => { setConfirmed(false); setStep(0); setType(""); }}
-              className="btn-ghost flex-1 justify-center !py-3">
+              className={`flex-1 justify-center py-3 rounded-full font-bold border transition-all ${
+                isLightMode ? "bg-[#F7F4EE] text-[#111116] border-[#DED9CF] hover:bg-[#EAE5DA]" : "btn-hero-outline"
+              }`}>
               New Event
             </button>
-            <button className="btn-primary flex-1 justify-center !py-3">
+            <button className="btn-gold-champagne flex-1 justify-center py-3 font-bold rounded-full">
               View Dashboard
             </button>
           </div>
@@ -111,40 +123,54 @@ export default function BookingFlow() {
   }
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-6">
+    <div className={`min-h-screen pt-10 pb-20 px-6 transition-colors duration-300 ${
+      isLightMode ? "bg-[#F7F4EE] text-[#111116]" : "bg-[#0B0B14] text-[#F7F4EE]"
+    }`}>
       <div className="max-w-3xl mx-auto">
 
         {/* Header */}
         <div className="text-center mb-10">
-          <p className="text-[12px] text-purple-400 font-semibold tracking-[0.25em] uppercase mb-2">Multi-step Wizard</p>
-          <h1 className="font-display font-700 text-4xl mb-2">
-            Plan Your <span className="grad-primary">Event</span>
+          <p className={`text-[11px] font-mono tracking-[0.25em] uppercase mb-2 font-bold ${
+            isLightMode ? "text-[#6F6B66]" : "text-[#B89B5E]"
+          }`}>Multi-step Wizard</p>
+          <h1 className={`font-serif font-bold text-4xl md:text-5xl mb-2 ${isLightMode ? "text-[#111116]" : "text-white"}`}>
+            Plan Your <span className="grad-champagne">Event</span>
           </h1>
-          <p className="text-white/45 text-[14px]">Complete all steps and your event will be confirmed instantly.</p>
+          <p className={`text-[14px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>
+            Complete all steps and your event will be confirmed instantly.
+          </p>
         </div>
 
-        <StepBar step={step} />
+        <StepBar step={step} isLightMode={isLightMode} />
 
-        <div className="glass rounded-3xl p-8 border border-white/12 card-shine relative overflow-hidden">
+        <div className={`rounded-3xl p-8 border relative overflow-hidden ${
+          isLightMode ? "bg-white border-[#DED9CF] shadow-sm text-[#111116]" : "bg-[#151522] border-white/10 text-white"
+        }`}>
           {/* Step glow accent */}
-          <div className="absolute top-0 left-0 right-0 h-0.5 neon-line" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#E8C98A] to-[#B89B5E]" />
 
           {/* ── Step 0: Event Type ── */}
           {step === 0 && (
             <div className="animate-fade-in">
-              <h2 className="font-display font-600 text-xl mb-1">What type of event are you planning?</h2>
-              <p className="text-white/40 text-[13px] mb-6">This helps us tailor venue, vendor and budget recommendations.</p>
+              <h2 className="font-serif font-bold text-2xl mb-1">What type of event are you planning?</h2>
+              <p className={`text-[13px] mb-6 font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>
+                This helps us tailor venue, vendor and budget recommendations.
+              </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {EVENT_TYPES.map(e => (
                   <button key={e.label} onClick={() => setType(e.label)}
-                    className={`group glass rounded-2xl p-5 flex flex-col items-center gap-2.5 border transition-all hover:scale-105 ${
-                      eventType === e.label
-                        ? "border-purple-500 bg-purple-500/15 glow-primary-sm"
-                        : "border-white/9 hover:border-white/22"
+                    className={`group rounded-2xl p-5 flex flex-col items-center gap-2.5 border transition-all hover:scale-105 ${
+                      isLightMode
+                        ? eventType === e.label
+                          ? "border-[#B89B5E] bg-[#B89B5E]/10 shadow-sm text-[#111116] font-bold"
+                          : "bg-white border-[#DED9CF] hover:border-[#B89B5E] text-[#111116]"
+                        : eventType === e.label
+                          ? "border-[#B89B5E] bg-[#B89B5E]/20 text-white"
+                          : "bg-[#1C1C2B] border-white/10 hover:border-white/25 text-white"
                     }`}>
                     <span className="text-3xl group-hover:scale-110 transition-transform">{e.icon}</span>
-                    <span className="text-[13px] font-semibold text-white">{e.label}</span>
-                    <span className="text-[10px] text-white/38 text-center leading-tight">{e.desc}</span>
+                    <span className="text-[13px] font-bold">{e.label}</span>
+                    <span className={`text-[10px] text-center leading-tight font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>{e.desc}</span>
                   </button>
                 ))}
               </div>
@@ -155,38 +181,48 @@ export default function BookingFlow() {
           {step === 1 && (
             <div className="animate-fade-in space-y-6">
               <div>
-                <h2 className="font-display font-600 text-xl mb-1">When is your event?</h2>
-                <p className="text-white/40 text-[13px]">Book at least 14 days in advance for guaranteed availability.</p>
+                <h2 className="font-serif font-bold text-2xl mb-1">When is your event?</h2>
+                <p className={`text-[13px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>
+                  Book at least 14 days in advance for guaranteed availability.
+                </p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-[12px] text-white/45 mb-2 uppercase tracking-wider">Event Date *</label>
+                  <label className={`block text-[12px] mb-2 uppercase tracking-wider font-bold ${isLightMode ? "text-[#6F6B66]" : "text-white/45"}`}>Event Date *</label>
                   <input type="date" value={date} onChange={e => setDate(e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
-                    className="input-glass w-full px-4 py-3.5 text-[15px]" />
+                    className={`w-full px-4 py-3.5 text-[15px] rounded-xl border transition-all ${
+                      isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] focus:bg-white focus:border-[#B89B5E] outline-none" : "bg-[#1C1C2B] border-white/15 text-white"
+                    }`} />
                 </div>
                 <div>
-                  <label className="block text-[12px] text-white/45 mb-2 uppercase tracking-wider">Start Time</label>
+                  <label className={`block text-[12px] mb-2 uppercase tracking-wider font-bold ${isLightMode ? "text-[#6F6B66]" : "text-white/45"}`}>Start Time</label>
                   <input type="time" value={time} onChange={e => setTime(e.target.value)}
-                    className="input-glass w-full px-4 py-3.5 text-[15px]" />
+                    className={`w-full px-4 py-3.5 text-[15px] rounded-xl border transition-all ${
+                      isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] focus:bg-white focus:border-[#B89B5E] outline-none" : "bg-[#1C1C2B] border-white/15 text-white"
+                    }`} />
                 </div>
               </div>
               {/* Popular time slots */}
               <div>
-                <div className="text-[12px] text-white/35 mb-3">Popular time slots</div>
+                <div className={`text-[12px] mb-3 font-semibold ${isLightMode ? "text-[#6F6B66]" : "text-white/35"}`}>Popular time slots</div>
                 <div className="flex flex-wrap gap-2">
                   {["07:00","10:00","12:00","16:00","18:00","19:30","20:00"].map(t => (
                     <button key={t} onClick={() => setTime(t)}
-                      className={`px-3 py-1.5 rounded-xl text-[12px] font-medium border transition-all ${
-                        time === t ? "border-purple-500 bg-purple-500/18 text-purple-300" : "glass border-white/10 text-white/55 hover:border-white/25"
+                      className={`px-3.5 py-1.5 rounded-xl text-[12px] font-bold border transition-all ${
+                        isLightMode
+                          ? time === t ? "border-[#B89B5E] bg-[#B89B5E] text-[#111116] shadow-sm" : "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]"
+                          : time === t ? "border-[#B89B5E] bg-[#B89B5E]/20 text-[#E8C98A]" : "bg-[#1C1C2B] border-white/10 text-white/60 hover:border-white/25"
                       }`}>
                       {t}
                     </button>
                   ))}
                 </div>
               </div>
-              <div className="glass rounded-2xl p-4 border border-amber-500/22">
-                <p className="text-[13px] text-amber-400/90">💡 <strong>Pro tip:</strong> Weekday events can save up to 30% on venue costs vs. weekends.</p>
+              <div className={`rounded-2xl p-4 border ${
+                isLightMode ? "bg-[#B89B5E]/10 border-[#B89B5E]/30 text-[#111116]" : "bg-[#1C1C2B] border-[#B89B5E]/30 text-[#E8C98A]"
+              }`}>
+                <p className="text-[13px] font-medium">💡 <strong>Pro tip:</strong> Weekday events can save up to 30% on venue costs vs. weekends.</p>
               </div>
             </div>
           )}
@@ -195,23 +231,25 @@ export default function BookingFlow() {
           {step === 2 && (
             <div className="animate-fade-in space-y-7">
               <div>
-                <h2 className="font-display font-600 text-xl mb-1">How many guests?</h2>
-                <p className="text-white/40 text-[13px]">Include family, friends, and all attendees.</p>
+                <h2 className="font-serif font-bold text-2xl mb-1">How many guests?</h2>
+                <p className={`text-[13px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>Include family, friends, and all attendees.</p>
               </div>
               <div className="text-center py-6">
-                <div className="font-display font-800 text-8xl grad-primary mb-1">{guests}</div>
-                <div className="text-white/40 text-[15px]">guests expected</div>
+                <div className={`font-mono font-extrabold text-8xl mb-1 ${isLightMode ? "text-[#B89B5E]" : "grad-champagne"}`}>{guests}</div>
+                <div className={`text-[15px] font-semibold ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>guests expected</div>
               </div>
               <input type="range" min={10} max={2000} step={10} value={guests}
-                onChange={e => setGuests(Number(e.target.value))} className="w-full" />
-              <div className="flex justify-between text-[11px] text-white/30 mt-1">
+                onChange={e => setGuests(Number(e.target.value))} className="w-full accent-[#B89B5E]" />
+              <div className={`flex justify-between text-[11px] font-semibold mt-1 ${isLightMode ? "text-[#6F6B66]" : "text-white/30"}`}>
                 <span>10</span><span>250</span><span>500</span><span>1000</span><span>2000+</span>
               </div>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 {[50,100,200,300,500,1000].map(g => (
                   <button key={g} onClick={() => setGuests(g)}
-                    className={`py-2.5 rounded-xl text-[12px] font-semibold border transition-all ${
-                      guests === g ? "border-purple-500 bg-purple-500/18 text-purple-300" : "glass border-white/10 text-white/55 hover:border-white/25"
+                    className={`py-2.5 rounded-xl text-[12px] font-bold border transition-all ${
+                      isLightMode
+                        ? guests === g ? "border-[#B89B5E] bg-[#B89B5E] text-[#111116] shadow-sm" : "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]"
+                        : guests === g ? "border-[#B89B5E] bg-[#B89B5E]/20 text-[#E8C98A]" : "bg-[#1C1C2B] border-white/10 text-white/60 hover:border-white/25"
                     }`}>
                     {g}
                   </button>
@@ -224,22 +262,24 @@ export default function BookingFlow() {
           {step === 3 && (
             <div className="animate-fade-in space-y-7">
               <div>
-                <h2 className="font-display font-600 text-xl mb-1">What is your total budget?</h2>
-                <p className="text-white/40 text-[13px]">Our AI will allocate this intelligently across all selected services.</p>
+                <h2 className="font-serif font-bold text-2xl mb-1">What is your total budget?</h2>
+                <p className={`text-[13px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>Our AI will allocate this intelligently across all selected services.</p>
               </div>
               <div className="text-center py-4">
-                <div className="font-display font-800 text-7xl grad-gold mb-1">
+                <div className={`font-mono font-extrabold text-7xl mb-1 ${isLightMode ? "text-[#B89B5E]" : "grad-champagne"}`}>
                   {budget >= 100000 ? `₹${(budget / 100000).toFixed(1)}L` : `₹${(budget / 1000).toFixed(0)}K`}
                 </div>
-                <div className="text-white/40 text-[15px]">total event budget</div>
+                <div className={`text-[15px] font-semibold ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>total event budget</div>
               </div>
               <input type="range" min={50000} max={5000000} step={25000} value={budget}
-                onChange={e => setBudget(Number(e.target.value))} className="w-full" />
+                onChange={e => setBudget(Number(e.target.value))} className="w-full accent-[#B89B5E]" />
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 {[100000,300000,500000,1000000,2000000,5000000].map(b => (
                   <button key={b} onClick={() => setBudget(b)}
-                    className={`py-2.5 rounded-xl text-[11px] font-semibold border transition-all ${
-                      budget === b ? "border-amber-500/70 bg-amber-500/12 text-amber-400" : "glass border-white/10 text-white/55 hover:border-white/25"
+                    className={`py-2.5 rounded-xl text-[11px] font-bold border transition-all ${
+                      isLightMode
+                        ? budget === b ? "border-[#B89B5E] bg-[#B89B5E] text-[#111116] shadow-sm" : "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]"
+                        : budget === b ? "border-[#B89B5E] bg-[#B89B5E]/20 text-[#E8C98A]" : "bg-[#1C1C2B] border-white/10 text-white/60 hover:border-white/25"
                     }`}>
                     {b >= 100000 ? `₹${(b/100000).toFixed(0)}L` : `₹${(b/1000).toFixed(0)}K`}
                   </button>
@@ -251,28 +291,32 @@ export default function BookingFlow() {
           {/* ── Step 4: Services ── */}
           {step === 4 && (
             <div className="animate-fade-in">
-              <h2 className="font-display font-600 text-xl mb-1">Which services do you need?</h2>
-              <p className="text-white/40 text-[13px] mb-6">Select all that apply — we&apos;ll match you with verified providers for each.</p>
+              <h2 className="font-serif font-bold text-2xl mb-1">Which services do you need?</h2>
+              <p className={`text-[13px] mb-6 font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>Select all that apply — we&apos;ll match you with verified providers for each.</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {SERVICES.map((s, i) => {
                   const on = services.includes(s.id);
                   return (
                     <button key={s.id} onClick={() => toggleService(s.id)}
                       className={`flex items-center gap-4 p-4 rounded-2xl border transition-all text-left ${
-                        on ? "border-purple-500 bg-purple-500/12" : "glass border-white/9 hover:border-white/22"
+                        isLightMode
+                          ? on ? "border-[#B89B5E] bg-[#B89B5E]/10 shadow-sm text-[#111116]" : "bg-white border-[#DED9CF] hover:border-[#B89B5E] text-[#111116]"
+                          : on ? "border-[#B89B5E] bg-[#B89B5E]/15 text-white" : "bg-[#1C1C2B] border-white/10 hover:border-white/22 text-white"
                       }`}>
                       <div className="w-11 h-11 rounded-xl flex items-center justify-center text-xl shrink-0"
-                        style={{ background: on ? `${COLORS[i]}25` : "rgba(255,255,255,0.07)" }}>
+                        style={{ background: isLightMode ? (on ? "#B89B5E" : "#F7F4EE") : (on ? `${COLORS[i]}25` : "rgba(255,255,255,0.07)") }}>
                         {s.icon}
                       </div>
                       <div className="flex-1">
-                        <div className="font-semibold text-[14px] text-white">{s.label}</div>
-                        <div className="text-[11px] text-white/40">{s.desc}</div>
+                        <div className="font-bold text-[14px]">{s.label}</div>
+                        <div className={`text-[11px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>{s.desc}</div>
                       </div>
                       <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-all ${
-                        on ? "border-purple-500 bg-purple-500" : "border-white/25"
+                        on 
+                          ? "border-[#B89B5E] bg-[#B89B5E]" 
+                          : (isLightMode ? "border-[#DED9CF]" : "border-white/25")
                       }`}>
-                        {on && <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round"/></svg>}
+                        {on && <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#111116" strokeWidth="2" strokeLinecap="round"/></svg>}
                       </div>
                     </button>
                   );
@@ -285,8 +329,8 @@ export default function BookingFlow() {
           {step === 5 && (
             <div className="animate-fade-in space-y-5">
               <div>
-                <h2 className="font-display font-600 text-xl mb-1">How would you like to manage your event?</h2>
-                <p className="text-white/40 text-[13px]">Choose the level of support that works for you.</p>
+                <h2 className="font-serif font-bold text-2xl mb-1">How would you like to manage your event?</h2>
+                <p className={`text-[13px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>Choose the level of support that works for you.</p>
               </div>
               {[
                 {
@@ -303,48 +347,54 @@ export default function BookingFlow() {
                   desc:`A dedicated senior manager runs everything. ${(MGMT_FEE * 100).toFixed(0)}% management fee deducted first.`,
                   icon:"👑",
                   badge:"Premium",
-                  badgeColor:"#D4AF37",
+                  badgeColor:"#B89B5E",
                 },
               ].map(opt => (
                 <button key={opt.id} onClick={() => setBookType(opt.id)}
                   className={`w-full flex items-start gap-4 p-6 rounded-2xl border text-left transition-all ${
-                    bookType === opt.id ? "border-purple-500 bg-purple-500/12" : "glass border-white/9 hover:border-white/22"
+                    isLightMode
+                      ? bookType === opt.id ? "border-[#B89B5E] bg-[#B89B5E]/10 shadow-sm text-[#111116]" : "bg-white border-[#DED9CF] hover:border-[#B89B5E] text-[#111116]"
+                      : bookType === opt.id ? "border-[#B89B5E] bg-[#B89B5E]/15 text-white" : "bg-[#1C1C2B] border-white/10 hover:border-white/22 text-white"
                   }`}>
-                  <div className="w-13 h-12 w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
-                    style={{ background:"rgba(106,56,255,0.18)" }}>{opt.icon}</div>
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
+                    style={{ background: isLightMode ? "#F7F4EE" : "rgba(184,155,94,0.18)" }}>{opt.icon}</div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2.5 mb-1.5">
-                      <span className="font-display font-600 text-[16px] text-white">{opt.title}</span>
+                      <span className="font-bold text-[16px]">{opt.title}</span>
                       <span className="chip text-[10px] font-bold"
                         style={{ background:`${opt.badgeColor}22`, color:opt.badgeColor, borderColor:`${opt.badgeColor}50` }}>
                         {opt.badge}
                       </span>
                     </div>
-                    <p className="text-white/52 text-[13px] leading-relaxed">{opt.desc}</p>
+                    <p className={`text-[13px] leading-relaxed font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/60"}`}>{opt.desc}</p>
                   </div>
                   <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center shrink-0 ${
-                    bookType === opt.id ? "border-purple-500 bg-purple-500" : "border-white/25"
+                    bookType === opt.id 
+                      ? "border-[#B89B5E] bg-[#B89B5E]" 
+                      : (isLightMode ? "border-[#DED9CF]" : "border-white/25")
                   }`}>
-                    {bookType === opt.id && <div className="w-2 h-2 rounded-full bg-white" />}
+                    {bookType === opt.id && <div className="w-2 h-2 rounded-full bg-[#111116]" />}
                   </div>
                 </button>
               ))}
 
               {bookType === "managed" && (
-                <div className="glass rounded-2xl p-5 border border-amber-500/22 animate-slide-down space-y-2.5">
+                <div className={`rounded-2xl p-5 border animate-slide-down space-y-2.5 ${
+                  isLightMode ? "bg-[#B89B5E]/10 border-[#B89B5E]/30 text-[#111116]" : "bg-[#1C1C2B] border-[#B89B5E]/30 text-white"
+                }`}>
                   {[
-                    { l:"Total Budget",             v:`₹${(budget/100000).toFixed(2)}L`,           c:"text-white"  },
-                    { l:`Management Fee (${(MGMT_FEE*100).toFixed(0)}%)`, v:`−₹${(budget*MGMT_FEE/100000).toFixed(2)}L`, c:"text-amber-400" },
+                    { l:"Total Budget",             v:`₹${(budget/100000).toFixed(2)}L`,           c: isLightMode ? "text-[#111116]" : "text-white"  },
+                    { l:`Management Fee (${(MGMT_FEE*100).toFixed(0)}%)`, v:`−₹${(budget*MGMT_FEE/100000).toFixed(2)}L`, c:"text-[#B89B5E] font-bold" },
                   ].map(r => (
                     <div key={r.l} className="flex justify-between text-[13px]">
-                      <span className="text-white/55">{r.l}</span>
+                      <span className={isLightMode ? "text-[#6F6B66]" : "text-white/55"}>{r.l}</span>
                       <span className={`font-semibold ${r.c}`}>{r.v}</span>
                     </div>
                   ))}
-                  <div className="h-px bg-white/10" />
+                  <div className={`h-px ${isLightMode ? "bg-[#DED9CF]" : "bg-white/10"}`} />
                   <div className="flex justify-between">
-                    <span className="text-[14px] font-semibold text-white">Available for Services</span>
-                    <span className="font-display font-800 text-[16px] grad-primary">₹{(netBudget/100000).toFixed(2)}L</span>
+                    <span className="text-[14px] font-bold">Available for Services</span>
+                    <span className="font-extrabold text-[16px] text-[#B89B5E]">₹{(netBudget/100000).toFixed(2)}L</span>
                   </div>
                 </div>
               )}
@@ -355,8 +405,8 @@ export default function BookingFlow() {
           {step === 6 && (
             <div className="animate-fade-in space-y-6">
               <div>
-                <h2 className="font-display font-600 text-xl mb-1">Review & Confirm</h2>
-                <p className="text-white/40 text-[13px]">Everything looks good? Confirm to book your event.</p>
+                <h2 className="font-serif font-bold text-2xl mb-1">Review & Confirm</h2>
+                <p className={`text-[13px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>Everything looks good? Confirm to book your event.</p>
               </div>
 
               {/* Summary grid */}
@@ -369,16 +419,20 @@ export default function BookingFlow() {
                   { label:"Budget",       value: `₹${(budget/100000).toFixed(1)}L` },
                   { label:"Management",   value: bookType === "managed" ? "Full Service" : "DIY" },
                 ].map(item => (
-                  <div key={item.label} className="glass rounded-2xl p-4 border border-white/8">
-                    <div className="text-[10px] text-white/35 uppercase tracking-wider mb-1">{item.label}</div>
-                    <div className="font-display font-600 text-[15px] text-white">{item.value}</div>
+                  <div key={item.label} className={`rounded-2xl p-4 border ${
+                    isLightMode ? "bg-[#F7F4EE] border-[#DED9CF]" : "bg-[#1C1C2B] border-white/10"
+                  }`}>
+                    <div className={`text-[10px] uppercase tracking-wider mb-1 font-bold ${isLightMode ? "text-[#6F6B66]" : "text-white/35"}`}>{item.label}</div>
+                    <div className="font-bold text-[15px]">{item.value}</div>
                   </div>
                 ))}
               </div>
 
               {/* Budget pie chart */}
-              <div className="glass rounded-2xl p-6 border border-white/10">
-                <div className="text-[12px] text-white/45 uppercase tracking-wider mb-5">Budget Allocation</div>
+              <div className={`rounded-2xl p-6 border ${
+                isLightMode ? "bg-white border-[#DED9CF] shadow-sm" : "bg-[#1C1C2B] border-white/10"
+              }`}>
+                <div className={`text-[12px] uppercase tracking-wider mb-5 font-bold ${isLightMode ? "text-[#6F6B66]" : "text-white/45"}`}>Budget Allocation</div>
                 <div className="flex flex-col md:flex-row gap-6 items-center">
                   <div style={{ width: 200, height: 200, minWidth: 200 }}>
                     <ResponsiveContainer width="100%" height="100%">
@@ -394,9 +448,9 @@ export default function BookingFlow() {
                     {chartData.map((item, i) => (
                       <div key={item.name} className="flex items-center gap-3">
                         <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background:COLORS[i % COLORS.length] }} />
-                        <span className="text-[13px] text-white/65 flex-1">{item.name}</span>
-                        <span className="text-[13px] font-semibold text-white">₹{(item.value/1000).toFixed(0)}K</span>
-                        <div className="w-16 h-1.5 bg-white/8 rounded-full overflow-hidden">
+                        <span className={`text-[13px] font-medium flex-1 ${isLightMode ? "text-[#111116]" : "text-white/65"}`}>{item.name}</span>
+                        <span className="text-[13px] font-bold">₹{(item.value/1000).toFixed(0)}K</span>
+                        <div className={`w-16 h-1.5 rounded-full overflow-hidden ${isLightMode ? "bg-[#F7F4EE]" : "bg-white/8"}`}>
                           <div className="h-full rounded-full" style={{ width:`${(item.value/netBudget)*100}%`, background:COLORS[i % COLORS.length] }} />
                         </div>
                       </div>
@@ -405,22 +459,24 @@ export default function BookingFlow() {
                 </div>
               </div>
 
-              <button onClick={() => setConfirmed(true)} className="btn-primary w-full justify-center !py-4 !text-[15px]">
+              <button onClick={() => setConfirmed(true)} className="btn-gold-champagne w-full justify-center py-4 text-[15px] font-bold rounded-full">
                 Confirm & Book Event →
               </button>
             </div>
           )}
 
           {/* ── Navigation ── */}
-          <div className="flex justify-between items-center mt-8 pt-6 border-t border-white/7">
+          <div className={`flex justify-between items-center mt-8 pt-6 border-t ${isLightMode ? "border-[#DED9CF]" : "border-white/10"}`}>
             <button onClick={() => setStep(s => Math.max(0, s - 1))} disabled={step === 0}
-              className="btn-ghost !py-2.5 disabled:opacity-25 disabled:cursor-not-allowed">
+              className={`py-2.5 px-5 rounded-full font-bold text-[13px] disabled:opacity-25 disabled:cursor-not-allowed transition-all ${
+                isLightMode ? "bg-[#F7F4EE] text-[#111116] border border-[#DED9CF] hover:bg-[#EAE5DA]" : "btn-hero-outline"
+              }`}>
               ← Back
             </button>
-            <span className="text-[12px] text-white/25 font-mono">{step + 1} / {STEPS.length}</span>
+            <span className={`text-[12px] font-mono font-bold ${isLightMode ? "text-[#6F6B66]" : "text-white/30"}`}>{step + 1} / {STEPS.length}</span>
             {step < 6 && (
               <button onClick={() => setStep(s => s + 1)} disabled={!canAdvance}
-                className="btn-primary !py-2.5 disabled:opacity-40 disabled:cursor-not-allowed">
+                className="btn-gold-champagne py-2.5 px-6 rounded-full font-bold text-[13px] disabled:opacity-40 disabled:cursor-not-allowed transition-all">
                 Continue →
               </button>
             )}

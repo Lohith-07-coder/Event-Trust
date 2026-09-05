@@ -28,65 +28,76 @@ interface VendorDetailProps {
   vendor: typeof vendors[0];
   onBack: () => void;
   setPage: (p: string) => void;
+  isLightMode?: boolean;
 }
 
-function VendorDetail({ vendor, onBack, setPage }: VendorDetailProps) {
+function VendorDetail({ vendor, onBack, setPage, isLightMode = false }: VendorDetailProps) {
   return (
     <div className="animate-fade-in">
-      <button onClick={onBack} className="flex items-center gap-2 text-[13px] text-white/60 hover:text-white mb-6 transition-colors">
+      <button onClick={onBack} className={`flex items-center gap-2 text-[13px] font-bold mb-6 transition-colors ${
+        isLightMode ? "text-[#6F6B66] hover:text-[#111116]" : "text-white/60 hover:text-white"
+      }`}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 3L5 8l5 5"/></svg>
         Back to vendors
       </button>
-      <div className="glass rounded-3xl overflow-hidden border border-white/12">
-        <div className="h-48 flex items-center justify-center text-6xl" style={{ background: "linear-gradient(135deg, rgba(106,56,255,0.2), rgba(139,92,246,0.1))" }}>
+      <div className={`rounded-3xl overflow-hidden border ${
+        isLightMode ? "bg-white border-[#DED9CF] text-[#111116] shadow-sm" : "bg-[#151522] border-white/12 text-white"
+      }`}>
+        <div className="h-48 flex items-center justify-center text-6xl" style={{ background: isLightMode ? "#F7F4EE" : "linear-gradient(135deg, rgba(184,155,94,0.2), rgba(232,201,138,0.1))" }}>
           {categories.find((c) => c.id === vendor.cat)?.icon || "⭐"}
         </div>
         <div className="p-8">
           <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <h2 className="font-display font-700 text-2xl text-white">{vendor.name}</h2>
-                {vendor.verified && <span className="status-confirmed px-2 py-0.5 rounded-full text-[11px]">✓ Verified</span>}
+                <h2 className="font-serif font-bold text-2xl">{vendor.name}</h2>
+                {vendor.verified && <span className="bg-emerald-500/10 text-emerald-700 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-[11px] font-bold">✓ Verified</span>}
               </div>
-              <p className="text-white/50 text-[14px]">📍 {vendor.city} · {categories.find((c) => c.id === vendor.cat)?.label}</p>
+              <p className={`text-[14px] ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>📍 {vendor.city} · {categories.find((c) => c.id === vendor.cat)?.label}</p>
             </div>
             <div className="text-right">
-              <div className="font-display font-700 text-xl grad-primary">{vendor.price}</div>
-              <div className={`text-[12px] font-medium mt-1 ${vendor.available ? "text-green-400" : "text-red-400"}`}>
+              <div className="font-mono font-bold text-xl text-[#B89B5E]">{vendor.price}</div>
+              <div className={`text-[12px] font-medium mt-1 ${vendor.available ? "text-emerald-600" : "text-rose-500"}`}>
                 {vendor.available ? "Available" : "Booked"}
               </div>
             </div>
           </div>
           <div className="flex items-center gap-3 mb-5">
-            <span className="text-amber-400 font-semibold">★ {vendor.rating}</span>
-            <span className="text-white/40 text-[13px]">({vendor.reviews} reviews)</span>
+            <span className="text-[#B89B5E] font-semibold">★ {vendor.rating}</span>
+            <span className={`text-[13px] ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>({vendor.reviews} reviews)</span>
           </div>
-          <p className="text-white/65 text-[14px] leading-relaxed mb-6">{vendor.desc}</p>
+          <p className={`text-[14px] leading-relaxed mb-6 ${isLightMode ? "text-[#6F6B66]" : "text-white/65"}`}>{vendor.desc}</p>
           {vendor.cat === "qr" && (
-            <div className="glass rounded-2xl p-5 border border-purple-500/20 mb-6">
+            <div className={`rounded-2xl p-5 border mb-6 ${
+              isLightMode ? "bg-[#F7F4EE] border-[#DED9CF]" : "bg-[#1C1C2B] border-white/10"
+            }`}>
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-2xl">📱</span>
-                <h4 className="font-600 text-white">Smart QR Features</h4>
+                <h4 className="font-serif font-bold text-[#111116]">Smart QR Features</h4>
               </div>
-              <div className="grid grid-cols-2 gap-2 text-[13px] text-white/65">
+              <div className="grid grid-cols-2 gap-2 text-[13px]">
                 {["Digital Invitations", "Live RSVP Tracking", "Guest Check-in QR", "Seating Assignment", "Event Analytics", "WhatsApp Integration"].map((f) => (
-                  <div key={f} className="flex items-center gap-2">
-                    <span className="text-green-400">✓</span>{f}
+                  <div key={f} className="flex items-center gap-2 font-medium text-[#6F6B66]">
+                    <span className="text-emerald-600">✓</span>{f}
                   </div>
                 ))}
               </div>
             </div>
           )}
           {vendor.cat === "brand" && (
-            <div className="glass rounded-2xl p-5 border border-amber-500/20 mb-6">
+            <div className={`rounded-2xl p-5 border mb-6 ${
+              isLightMode ? "bg-[#F7F4EE] border-[#DED9CF]" : "bg-[#1C1C2B] border-white/10"
+            }`}>
               <div className="flex items-center gap-3 mb-3">
                 <span className="text-2xl">🏷️</span>
-                <h4 className="font-600 text-white">BrandWorks Products</h4>
+                <h4 className="font-serif font-bold text-[#111116]">BrandWorks Products</h4>
               </div>
               <div className="grid grid-cols-3 gap-3">
                 {["🍶 Bottles", "☕ Cups", "👜 Bags", "🍽️ Plates", "🧻 Tissues", "📦 Boxes"].map((p) => (
                   <button key={p} onClick={() => setPage("brandworks")}
-                    className="glass rounded-xl py-3 text-[13px] text-white/70 hover:text-white border border-white/10 hover:border-purple-500/40 transition-all">
+                    className={`rounded-xl py-3 text-[13px] font-semibold border transition-all ${
+                      isLightMode ? "bg-white border-[#DED9CF] text-[#111116] hover:border-[#B89B5E]" : "bg-white/5 border-white/10 text-white hover:border-[#B89B5E]"
+                    }`}>
                     {p}
                   </button>
                 ))}
@@ -94,14 +105,17 @@ function VendorDetail({ vendor, onBack, setPage }: VendorDetailProps) {
             </div>
           )}
           <div className="flex gap-3">
-            <button className="flex-1 py-3.5 rounded-2xl font-semibold text-white glow-primary"
-              style={{ background: "linear-gradient(135deg, #6A38FF, #8B5CF6)" }}>
+            <button className="btn-gold-champagne flex-1 py-3.5 rounded-full font-bold justify-center">
               Book Vendor
             </button>
-            <button className="px-5 py-3.5 rounded-2xl glass border border-white/20 text-white/80 hover:border-white/40 transition-all">
+            <button className={`px-5 py-3.5 rounded-full font-bold border transition-all ${
+              isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]" : "btn-hero-outline"
+            }`}>
               WhatsApp
             </button>
-            <button className="px-5 py-3.5 rounded-2xl glass border border-white/20 text-white/80 hover:border-white/40 transition-all">
+            <button className={`px-5 py-3.5 rounded-full font-bold border transition-all ${
+              isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]" : "btn-hero-outline"
+            }`}>
               Portfolio
             </button>
           </div>
@@ -113,61 +127,83 @@ function VendorDetail({ vendor, onBack, setPage }: VendorDetailProps) {
 
 interface VendorsProps {
   setPage: (p: string) => void;
+  isLightMode?: boolean;
 }
 
-export default function Vendors({ setPage }: VendorsProps) {
+export default function Vendors({ setPage, isLightMode = false }: VendorsProps) {
   const [activeCat, setActiveCat] = useState("all");
   const [selected, setSelected] = useState<typeof vendors[0] | null>(null);
 
   const filtered = activeCat === "all" ? vendors : vendors.filter((v) => v.cat === activeCat);
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-6">
+    <div className={`min-h-screen pt-10 pb-20 px-6 transition-colors duration-300 ${
+      isLightMode ? "bg-[#F7F4EE] text-[#111116]" : "bg-[#0B0B14] text-[#F7F4EE]"
+    }`}>
       <div className="max-w-[1440px] mx-auto">
         <div className="mb-8">
-          <h1 className="font-display font-700 text-3xl md:text-4xl mb-2">
-            Premium <span className="grad-primary">Vendors</span>
+          <p className={`text-[11px] font-mono tracking-[0.25em] uppercase mb-2 font-bold ${
+            isLightMode ? "text-[#6F6B66]" : "text-[#B89B5E]"
+          }`}>Verified Network</p>
+          <h1 className={`font-serif font-bold text-3xl md:text-5xl mb-2 ${
+            isLightMode ? "text-[#111116]" : "text-white"
+          }`}>
+            Premium <span className="grad-champagne">Vendors</span>
           </h1>
-          <p className="text-white/50 text-[14px]">{filtered.length} vendors available</p>
+          <p className={`text-[14px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>{filtered.length} verified vendors available</p>
         </div>
 
         {/* Category pills */}
         <div className="flex gap-2 overflow-x-auto pb-2 mb-8">
-          {categories.map((c) => (
-            <button key={c.id} onClick={() => setActiveCat(c.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-medium whitespace-nowrap border transition-all shrink-0 ${
-                activeCat === c.id ? "border-purple-500 bg-purple-500/18 text-purple-300" : "border-white/12 text-white/60 hover:border-white/25 hover:text-white glass"
-              }`}>
-              <span>{c.icon}</span>{c.label}
-            </button>
-          ))}
+          {categories.map((c) => {
+            const isActive = activeCat === c.id;
+            return (
+              <button key={c.id} onClick={() => setActiveCat(c.id)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] font-bold whitespace-nowrap border transition-all shrink-0 ${
+                  isLightMode
+                    ? isActive
+                      ? "btn-gold-champagne !px-4 !py-2.5 text-[#111116] shadow-md"
+                      : "bg-white border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]"
+                    : isActive
+                      ? "border-[#B89B5E] bg-[#B89B5E]/20 text-[#E8C98A]"
+                      : "border-white/12 text-white/60 hover:border-white/25 hover:text-white bg-[#151522]"
+                }`}>
+                <span>{c.icon}</span>{c.label}
+              </button>
+            );
+          })}
         </div>
 
         {selected ? (
-          <VendorDetail vendor={selected} onBack={() => setSelected(null)} setPage={setPage}/>
+          <VendorDetail vendor={selected} onBack={() => setSelected(null)} setPage={setPage} isLightMode={isLightMode}/>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filtered.map((v) => (
               <button key={v.name} onClick={() => setSelected(v)}
-                className="glass rounded-3xl p-6 text-left hover-lift border border-white/10 hover:border-white/22 transition-all">
+                className={`rounded-3xl p-6 text-left border transition-all hover:-translate-y-1 ${
+                  isLightMode
+                    ? "bg-white border-[#DED9CF] shadow-sm text-[#111116] hover:border-[#B89B5E]"
+                    : "bg-[#151522] border-white/10 hover:border-white/22 text-white"
+                }`}>
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl"
-                    style={{ background: "linear-gradient(135deg, rgba(106,56,255,0.25), rgba(139,92,246,0.15))" }}>
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl ${
+                    isLightMode ? "bg-[#F7F4EE] text-[#B89B5E]" : "bg-white/10 text-[#E8C98A]"
+                  }`}>
                     {categories.find((c) => c.id === v.cat)?.icon}
                   </div>
                   <div className="flex flex-col items-end gap-1">
-                    {v.verified && <span className="status-confirmed px-2 py-0.5 rounded-full text-[10px]">✓ Verified</span>}
-                    <span className={`text-[11px] font-medium ${v.available ? "text-green-400" : "text-red-400"}`}>
+                    {v.verified && <span className="bg-emerald-500/10 text-emerald-700 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-[10px] font-bold">✓ Verified</span>}
+                    <span className={`text-[11px] font-bold ${v.available ? "text-emerald-600" : "text-rose-500"}`}>
                       {v.available ? "● Available" : "● Booked"}
                     </span>
                   </div>
                 </div>
-                <h3 className="font-display font-600 text-[16px] text-white mb-1">{v.name}</h3>
-                <p className="text-white/45 text-[12px] mb-3">📍 {v.city}</p>
-                <p className="text-white/60 text-[13px] leading-relaxed mb-4 line-clamp-2">{v.desc}</p>
-                <div className="flex items-center justify-between">
-                  <div className="font-display font-700 text-[15px]" style={{ color: "#8B5CF6" }}>{v.price}</div>
-                  <div className="text-amber-400 text-[13px] font-semibold">★ {v.rating} <span className="text-white/35 font-normal text-[11px]">({v.reviews})</span></div>
+                <h3 className={`font-serif font-bold text-xl mb-1 ${isLightMode ? "text-[#111116]" : "text-white"}`}>{v.name}</h3>
+                <p className={`text-[12px] font-medium mb-3 ${isLightMode ? "text-[#6F6B66]" : "text-white/45"}`}>📍 {v.city}</p>
+                <p className={`text-[13px] leading-relaxed mb-4 line-clamp-2 ${isLightMode ? "text-[#6F6B66]" : "text-white/60"}`}>{v.desc}</p>
+                <div className={`flex items-center justify-between pt-3 border-t ${isLightMode ? "border-[#DED9CF]" : "border-white/10"}`}>
+                  <div className="font-mono font-bold text-[15px] text-[#B89B5E]">{v.price}</div>
+                  <div className="text-[#B89B5E] text-[13px] font-bold">★ {v.rating} <span className={`${isLightMode ? "text-[#6F6B66]" : "text-white/35"} font-normal text-[11px]`}>({v.reviews})</span></div>
                 </div>
               </button>
             ))}

@@ -1,25 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import 'tailwindcss';
 
 /* ─── Design Tokens ─────────────────────────────── */
 @theme {
-  --color-bg:             #0E051D;
-  --color-surface:        #170A2D;
-  --color-surface2:       #200E3D;
-  --color-primary:        #9333EA;
-  --color-primary-light:  #A855F7;
-  --color-secondary:      #EC4899;
-  --color-accent:         #F472B6;
-  --color-accent-light:   #FBCFE8;
-  --color-neon-blue:      #38BDF8;
-  --color-glass:          rgba(255,255,255,0.06);
-  --color-glass-border:   rgba(168,85,247,0.25);
-  --color-text:           #F8F5FF;
-  --color-muted:          rgba(248,245,255,0.6);
-  --font-sans:    'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-serif:   'Cormorant Garamond', Georgia, serif;
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-mono:    'JetBrains Mono', monospace;
+  --color-hero-bg:        #0B0B14;
+  --color-dark-surface:   #151522;
+  --color-secondary-dark: #1C1C2B;
+  --color-gold-champagne: #B89B5E;
+  --color-gold-light:     #E8C98A;
+  --color-ivory:          #F7F4EE;
+  --color-white:          #FFFFFF;
+  --color-main-dark:      #111116;
+  --color-secondary-text: #6F6B66;
+  --color-border-warm:    #DED9CF;
+  --color-lavender:       #8B5CF6;
+  --font-sans:            'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-serif:           'Cormorant Garamond', Georgia, serif;
+  --font-display:         'Cormorant Garamond', Georgia, serif;
+  --font-handwriting:     'Caveat', cursive;
+  --font-mono:            'JetBrains Mono', monospace;
 }
 
 /* ─── Reset / Base ──────────────────────────────── */
@@ -98,7 +97,13 @@ body {
   background-clip: text;
 }
 .grad-gold {
-  background: linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #B8860B 100%);
+  background: linear-gradient(135deg, #E8C98A 0%, #B89B5E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.grad-champagne {
+  background: linear-gradient(135deg, #E8C98A 0%, #B89B5E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -126,7 +131,7 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #6A38FF 0%, #8B5CF6 50%, #D4AF37 100%);
+  background: linear-gradient(135deg, #E8C98A 0%, #B89B5E 100%);
   z-index: -1;
   opacity: 0.7;
 }
@@ -140,10 +145,11 @@ body {
 }
 
 /* ─── Typography ────────────────────────────────── */
-.font-serif   { font-family: 'Cormorant Garamond', Georgia, serif; }
-.font-display { font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: -0.01em; }
-.font-sans    { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
-.font-mono    { font-family: 'JetBrains Mono', monospace; }
+.font-serif       { font-family: 'Cormorant Garamond', Georgia, serif; }
+.font-display     { font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: -0.01em; }
+.font-sans        { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+.font-mono        { font-family: 'JetBrains Mono', monospace; }
+.font-handwriting { font-family: 'Caveat', cursive; }
 
 /* ─── Hover Lift ────────────────────────────────── */
 .hover-lift {
@@ -198,16 +204,38 @@ body {
   transform: translateY(-1px);
 }
 
-.btn-gold {
+.btn-gold-champagne, .btn-gold {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 12px 26px; border-radius: 999px;
   font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 13.5px;
-  color: #ffffff; cursor: pointer;
-  background: linear-gradient(135deg, #A855F7, #EC4899);
-  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
-  transition: all 0.2s ease; border: none;
+  color: #111116; cursor: pointer;
+  background: linear-gradient(135deg, #E8C98A 0%, #B89B5E 100%);
+  box-shadow: 0 4px 20px rgba(184, 155, 94, 0.35);
+  transition: all 0.25s ease; border: none; outline: none;
 }
-.btn-gold:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.btn-gold-champagne:hover, .btn-gold:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 28px rgba(184, 155, 94, 0.5);
+}
+.btn-gold-champagne:active, .btn-gold:active { transform: scale(0.98); }
+
+.btn-hero-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 26px; border-radius: 999px;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 13.5px;
+  color: #FFFFFF; cursor: pointer;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(16px);
+  transition: all 0.25s ease;
+}
+.btn-hero-outline:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: #B89B5E;
+  color: #E8C98A;
+  transform: translateY(-1px);
+}
 
 /* ─── Form Inputs ───────────────────────────────── */
 .input-glass {
@@ -545,3 +573,99 @@ input[type=range]::-webkit-slider-runnable-track {
 @media (min-width: 769px) {
   .hide-desktop { display: none !important; }
 }
+
+/* ─── Studio Presentation & Theme System ────────── */
+.studio-bg-light {
+  background-color: #CBD5E1;
+  background-image: 
+    radial-gradient(circle at 50% 25%, #F1F5F9 0%, #E2E8F0 40%, #94A3B8 100%);
+  background-attachment: fixed;
+  color: #0F172A;
+}
+
+.studio-bg-dark {
+  background-color: #0B0516;
+  background-image: 
+    radial-gradient(circle at 50% 30%, #1D1038 0%, #0E051D 60%, #05010A 100%);
+  background-attachment: fixed;
+  color: #F8F5FF;
+}
+
+.studio-canvas-light {
+  background-color: #FFFFFF;
+  color: #0F172A;
+}
+
+.studio-canvas-dark {
+  background-color: #0E051D;
+  color: #F8F5FF;
+}
+
+/* Presentation Canvas Frame (Reference Image Style) */
+.studio-frame {
+  border-radius: 20px;
+  box-shadow: 0 25px 80px -15px rgba(0, 0, 0, 0.25), 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.studio-frame-light {
+  border: 1px solid #E2E8F0;
+  background: #FFFFFF;
+}
+.studio-frame-dark {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #0E051D;
+}
+
+/* Vibrant Orange CTA Pill Button (Reference Image) */
+.btn-orange-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #FF4500 0%, #FF6B00 100%);
+  box-shadow: 0 10px 30px rgba(255, 69, 0, 0.42), 0 4px 12px rgba(255, 107, 0, 0.25);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: none;
+  cursor: pointer;
+}
+.btn-orange-glow:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 38px rgba(255, 69, 0, 0.55), 0 6px 18px rgba(255, 107, 0, 0.35);
+  filter: brightness(1.06);
+}
+.btn-orange-glow:active {
+  transform: scale(0.98);
+}
+
+/* Icy Light Mesh Banner (Reference Image Hero Card) */
+.icy-mesh-card {
+  background: linear-gradient(135deg, #E6F3FA 0%, #F2F8FC 50%, #E9F4FA 100%);
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pastel Badge Highlights (Reference Image) */
+.badge-coral {
+  background: linear-gradient(135deg, #FF7E5F, #FEB47B);
+  color: white;
+  box-shadow: 0 4px 14px rgba(255, 126, 95, 0.35);
+}
+.badge-mint {
+  background: linear-gradient(135deg, #10B981, #34D399);
+  color: white;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+/* Soft Elevated Shadow for Cards */
+.soft-card-shadow {
+  box-shadow: 0 18px 40px -10px rgba(15, 23, 42, 0.07), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+}
+

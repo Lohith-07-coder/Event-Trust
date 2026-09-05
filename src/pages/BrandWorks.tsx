@@ -9,9 +9,9 @@ const products = [
   { id: "box", label: "Gift Box", icon: "📦", basePrice: 220, desc: "Rigid gift box with magnetic closure & insert" },
 ];
 
-const colorOptions = ["#6A38FF", "#8B5CF6", "#D4AF37", "#EC4899", "#10B981", "#0EA5E9", "#EF4444", "#F59E0B"];
+const colorOptions = ["#B89B5E", "#E8C98A", "#111116", "#EC4899", "#10B981", "#0EA5E9", "#EF4444", "#F59E0B"];
 
-export default function BrandWorks() {
+export default function BrandWorks({ isLightMode = false }: { isLightMode?: boolean }) {
   const [selected, setSelected] = useState(products[0]);
   const [qty, setQty] = useState(100);
   const [color, setColor] = useState(colorOptions[0]);
@@ -24,152 +24,114 @@ export default function BrandWorks() {
   const discount = qty >= 500 ? "25% bulk discount" : qty >= 200 ? "15% bulk discount" : qty >= 100 ? "8% bulk discount" : "";
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-6">
+    <div className={`min-h-screen pt-10 pb-20 px-6 transition-colors duration-300 ${
+      isLightMode ? "bg-[#F7F4EE] text-[#111116]" : "bg-[#0B0B14] text-[#F7F4EE]"
+    }`}>
       <div className="max-w-[1440px] mx-auto">
         <div className="mb-10">
-          <h1 className="font-display font-700 text-3xl md:text-4xl mb-2">
-            Brand<span className="grad-gold">Works</span>
+          <p className={`text-[11px] font-mono tracking-[0.25em] uppercase mb-2 font-bold ${
+            isLightMode ? "text-[#6F6B66]" : "text-[#B89B5E]"
+          }`}>Custom Merchandise</p>
+          <h1 className={`font-serif font-bold text-3xl md:text-5xl mb-2 ${isLightMode ? "text-[#111116]" : "text-white"}`}>
+            Brand<span className="grad-champagne">Works</span>
           </h1>
-          <p className="text-white/50 text-[14px]">Custom-branded event merchandise with your logo — premium quality, fast delivery</p>
+          <p className={`text-[14px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>
+            Custom-branded event merchandise with your logo — premium quality, fast delivery
+          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Product selector */}
           <div className="lg:w-64 shrink-0 space-y-2">
-            {products.map((p) => (
-              <button key={p.id} onClick={() => setSelected(p)}
-                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl border transition-all text-left ${
-                  selected.id === p.id ? "border-amber-500/50 bg-amber-500/10" : "glass border-white/10 hover:border-white/25"
-                }`}>
-                <span className="text-2xl">{p.icon}</span>
-                <div>
-                  <div className="font-medium text-[14px] text-white">{p.label}</div>
-                  <div className="text-[12px] text-white/40">from ₹{p.basePrice}/unit</div>
-                </div>
-              </button>
-            ))}
+            {products.map((p) => {
+              const isActive = selected.id === p.id;
+              return (
+                <button key={p.id} onClick={() => setSelected(p)}
+                  className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl border transition-all text-left ${
+                    isLightMode
+                      ? isActive
+                        ? "border-[#B89B5E] bg-white shadow-sm text-[#111116] font-bold"
+                        : "bg-white/60 border-[#DED9CF] hover:border-[#B89B5E] text-[#111116]"
+                      : isActive
+                        ? "border-[#B89B5E] bg-[#151522] text-white font-bold"
+                        : "glass border-white/8 hover:border-white/20 text-white/70"
+                  }`}>
+                  <span className="text-2xl">{p.icon}</span>
+                  <div className="flex-1">
+                    <div className="text-[14px] font-semibold">{p.label}</div>
+                    <div className={`text-[11px] font-mono ${isLightMode ? "text-[#B89B5E]" : "text-[#E8C98A]"}`}>₹{p.basePrice}/unit</div>
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Preview + configurator */}
-          <div className="flex-1 flex flex-col lg:flex-row gap-6">
-            {/* Live preview */}
-            <div className="lg:w-72 shrink-0">
-              <div className="glass rounded-3xl p-8 border border-white/12 text-center sticky top-24">
-                <div className="text-[12px] text-white/40 uppercase tracking-wider mb-4">Live Preview</div>
+          {/* Center: Interactive Live Preview */}
+          <div className="flex-1 space-y-6">
+            <div className={`rounded-3xl p-8 border text-center flex flex-col items-center justify-center min-h-[380px] relative overflow-hidden ${
+              isLightMode ? "bg-white border-[#DED9CF] shadow-sm text-[#111116]" : "bg-[#151522] border-white/10 text-white"
+            }`}>
+              {/* Product preview icon & mock canvas */}
+              <div className="w-40 h-40 rounded-3xl mx-auto flex flex-col items-center justify-center relative shadow-xl transition-transform hover:scale-105 duration-300"
+                style={{ background: color }}>
+                <span className="text-6xl mb-2 filter drop-shadow-md">{selected.icon}</span>
+                <div className="font-serif font-bold text-sm text-white px-2 tracking-wide text-center drop-shadow-md">{logoText}</div>
+                {tagline && <div className="text-[9px] font-mono text-white/80 font-medium">{tagline}</div>}
+              </div>
 
-                {/* Product visual */}
-                <div className="relative mx-auto mb-6" style={{ width: 160, height: 200 }}>
-                  {/* Base shape */}
-                  {selected.id === "bottle" && (
-                    <div className="w-full h-full flex flex-col items-center">
-                      <div className="w-8 h-6 rounded-t-lg" style={{ background: color, opacity: 0.8 }}/>
-                      <div className="w-24 flex-1 rounded-2xl relative overflow-hidden shadow-2xl"
-                        style={{ background: `linear-gradient(135deg, ${color}CC, ${color}66)` }}>
-                        <div className="absolute inset-2 rounded-xl bg-white/5 backdrop-blur-sm flex flex-col items-center justify-center gap-1 p-3">
-                          <div className="font-display font-800 text-[11px] text-white text-center">{logoText}</div>
-                          <div className="w-12 h-px bg-white/40"/>
-                          <div className="text-[9px] text-white/70 text-center">{tagline}</div>
-                        </div>
-                        <div className="absolute left-0 top-1/4 w-full h-1/3 bg-white/10"/>
-                      </div>
-                    </div>
-                  )}
-
-                  {selected.id === "cup" && (
-                    <div className="w-28 h-40 mx-auto relative rounded-b-2xl rounded-t-lg overflow-hidden shadow-2xl"
-                      style={{ background: `linear-gradient(135deg, ${color}CC, ${color}66)` }}>
-                      <div className="absolute inset-2 flex flex-col items-center justify-center gap-1">
-                        <div className="font-display font-800 text-[11px] text-white">{logoText}</div>
-                        <div className="w-12 h-px bg-white/40"/>
-                        <div className="text-[9px] text-white/70 text-center">{tagline}</div>
-                      </div>
-                      <div className="absolute left-0 top-0 w-full h-6 rounded-lg" style={{ background: `${color}AA` }}/>
-                    </div>
-                  )}
-
-                  {(selected.id === "bag" || selected.id === "box") && (
-                    <div className="w-36 h-44 mx-auto relative rounded-2xl overflow-hidden shadow-2xl"
-                      style={{ background: `linear-gradient(135deg, ${color}CC, ${color}44)`, border: `2px solid ${color}` }}>
-                      <div className="absolute inset-3 flex flex-col items-center justify-center gap-2">
-                        <div className="text-4xl">{selected.icon}</div>
-                        <div className="font-display font-800 text-[12px] text-white text-center">{logoText}</div>
-                        <div className="text-[9px] text-white/70 text-center">{tagline}</div>
-                      </div>
-                      {/* Ribbon */}
-                      <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: "#D4AF37" }}/>
-                    </div>
-                  )}
-
-                  {(selected.id === "plate" || selected.id === "tissue") && (
-                    <div className="w-40 h-40 mx-auto relative rounded-full overflow-hidden shadow-2xl flex items-center justify-center"
-                      style={{ background: `linear-gradient(135deg, ${color}30, ${color}10)`, border: `3px solid ${color}80` }}>
-                      <div className="absolute inset-4 rounded-full border" style={{ borderColor: `${color}60` }}/>
-                      <div className="text-center z-10">
-                        <div className="text-3xl mb-1">{selected.icon}</div>
-                        <div className="font-display font-800 text-[11px] text-white">{logoText}</div>
-                        <div className="text-[9px] text-white/60">{tagline}</div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="text-[13px] text-white/60 font-medium">{selected.label}</div>
-                <div className="text-[11px] text-white/35 mt-1">{finish} Finish · {qty} units</div>
-
-                {/* Price */}
-                <div className="mt-5 glass rounded-2xl p-4 border border-amber-500/20">
-                  <div className="font-display font-800 text-2xl grad-gold">₹{totalPrice.toLocaleString()}</div>
-                  <div className="text-[11px] text-white/40 mt-0.5">₹{unitPrice.toFixed(0)}/unit</div>
-                  {discount && (
-                    <div className="text-[11px] text-green-400 mt-1">🎉 {discount}</div>
-                  )}
-                </div>
+              <div className="mt-6">
+                <span className="bg-emerald-500/10 text-emerald-700 border border-emerald-500/30 px-3 py-1 rounded-full text-[11px] font-bold">
+                  Finish: {finish} · Custom Engraved
+                </span>
               </div>
             </div>
 
-            {/* Config panel */}
-            <div className="flex-1 space-y-5">
-              {/* Product info */}
-              <div className="glass rounded-2xl p-6 border border-white/10">
-                <h3 className="font-display font-600 text-[16px] mb-1">{selected.label}</h3>
-                <p className="text-white/55 text-[13px]">{selected.desc}</p>
+            {/* Config controls */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Custom text & tagline */}
+              <div className={`rounded-3xl p-6 border ${
+                isLightMode ? "bg-white border-[#DED9CF] shadow-sm text-[#111116]" : "bg-[#151522] border-white/10 text-white"
+              }`}>
+                <h4 className={`text-[12px] uppercase tracking-wider font-bold mb-4 ${isLightMode ? "text-[#6F6B66]" : "text-white/60"}`}>Custom Branding Text</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className={`block text-[11px] mb-1 font-semibold ${isLightMode ? "text-[#6F6B66]" : "text-white/45"}`}>Brand Name / Logo Text</label>
+                    <input value={logoText} onChange={(e) => setLogoText(e.target.value)}
+                      className={`w-full px-3.5 py-2.5 text-[13px] rounded-xl border ${
+                        isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] focus:bg-white focus:border-[#B89B5E] outline-none" : "bg-[#1C1C2B] border-white/15 text-white"
+                      }`}/>
+                  </div>
+                  <div>
+                    <label className={`block text-[11px] mb-1 font-semibold ${isLightMode ? "text-[#6F6B66]" : "text-white/45"}`}>Event Tagline / Date</label>
+                    <input value={tagline} onChange={(e) => setTagline(e.target.value)}
+                      className={`w-full px-3.5 py-2.5 text-[13px] rounded-xl border ${
+                        isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] focus:bg-white focus:border-[#B89B5E] outline-none" : "bg-[#1C1C2B] border-white/15 text-white"
+                      }`}/>
+                  </div>
+                </div>
               </div>
 
-              {/* Logo text */}
-              <div className="glass rounded-2xl p-6 border border-white/10 space-y-4">
-                <h4 className="font-600 text-[14px] text-white/60 uppercase tracking-wider text-[12px]">Brand Details</h4>
-                <div>
-                  <label className="block text-[12px] text-white/45 mb-2">Brand / Company Name</label>
-                  <input value={logoText} onChange={(e) => setLogoText(e.target.value)}
-                    placeholder="Your brand name" className="input-glass w-full px-4 py-3 text-[14px]"/>
-                </div>
-                <div>
-                  <label className="block text-[12px] text-white/45 mb-2">Tagline / Event Name</label>
-                  <input value={tagline} onChange={(e) => setTagline(e.target.value)}
-                    placeholder="Your tagline or event name" className="input-glass w-full px-4 py-3 text-[14px]"/>
-                </div>
-              </div>
-
-              {/* Color picker */}
-              <div className="glass rounded-2xl p-6 border border-white/10">
-                <h4 className="font-600 text-[12px] text-white/60 uppercase tracking-wider mb-3">Brand Color</h4>
-                <div className="flex flex-wrap gap-3">
+              {/* Color & finish pickers */}
+              <div className={`rounded-3xl p-6 border ${
+                isLightMode ? "bg-white border-[#DED9CF] shadow-sm text-[#111116]" : "bg-[#151522] border-white/10 text-white"
+              }`}>
+                <h4 className={`text-[12px] uppercase tracking-wider font-bold mb-3 ${isLightMode ? "text-[#6F6B66]" : "text-white/60"}`}>Merchandise Color</h4>
+                <div className="flex flex-wrap gap-2.5 mb-5">
                   {colorOptions.map((c) => (
                     <button key={c} onClick={() => setColor(c)}
-                      className={`w-9 h-9 rounded-xl transition-all ${color === c ? "scale-125" : "hover:scale-110"}`}
-                      style={{ background: c, boxShadow: color === c ? `0 0 15px ${c}80` : "none", outline: color === c ? `2px solid white` : "none", outlineOffset: 2 }}/>
+                      className={`w-8 h-8 rounded-full shadow-md transition-transform hover:scale-110 ${color === c ? "ring-2 ring-offset-2 ring-[#B89B5E]" : ""}`}
+                      style={{ background: c }}/>
                   ))}
                 </div>
-              </div>
 
-              {/* Finish */}
-              <div className="glass rounded-2xl p-6 border border-white/10">
-                <h4 className="font-600 text-[12px] text-white/60 uppercase tracking-wider mb-3">Print Finish</h4>
-                <div className="flex gap-3">
-                  {["Matte", "Gloss", "Satin", "Metallic"].map((f) => (
+                <h4 className={`text-[12px] uppercase tracking-wider font-bold mb-2 ${isLightMode ? "text-[#6F6B66]" : "text-white/60"}`}>Print Finish</h4>
+                <div className="flex gap-2">
+                  {["Matte", "Gloss", "Metallic Foil"].map((f) => (
                     <button key={f} onClick={() => setFinish(f)}
-                      className={`px-4 py-2.5 rounded-xl text-[13px] font-medium border transition-all ${
-                        finish === f ? "border-amber-500/50 text-amber-400 bg-amber-500/10" : "border-white/12 text-white/55 glass hover:border-white/25"
+                      className={`px-4 py-2.5 rounded-xl text-[13px] font-bold border transition-all ${
+                        isLightMode
+                          ? finish === f ? "btn-gold-champagne !px-4 !py-2.5 text-[#111116] shadow-sm" : "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]"
+                          : finish === f ? "border-[#B89B5E] bg-[#B89B5E]/20 text-[#E8C98A]" : "border-white/12 text-white/55 bg-[#1C1C2B]"
                       }`}>
                       {f}
                     </button>
@@ -178,14 +140,16 @@ export default function BrandWorks() {
               </div>
 
               {/* Quantity */}
-              <div className="glass rounded-2xl p-6 border border-white/10">
-                <h4 className="font-600 text-[12px] text-white/60 uppercase tracking-wider mb-3">Quantity: {qty} units</h4>
+              <div className={`rounded-3xl p-6 border md:col-span-2 ${
+                isLightMode ? "bg-white border-[#DED9CF] shadow-sm text-[#111116]" : "bg-[#151522] border-white/10 text-white"
+              }`}>
+                <h4 className={`text-[12px] uppercase tracking-wider font-bold mb-3 ${isLightMode ? "text-[#6F6B66]" : "text-white/60"}`}>Quantity: {qty} units {discount && <span className="text-[#B89B5E] font-bold">({discount})</span>}</h4>
                 <input type="range" min={25} max={2000} step={25} value={qty}
-                  onChange={(e) => setQty(Number(e.target.value))} className="w-full"/>
-                <div className="flex justify-between text-[11px] text-white/35 mt-2">
+                  onChange={(e) => setQty(Number(e.target.value))} className="w-full accent-[#B89B5E]"/>
+                <div className={`flex justify-between text-[11px] font-semibold mt-2 ${isLightMode ? "text-[#6F6B66]" : "text-white/35"}`}>
                   <span>25</span>
                   {[100, 200, 500, 1000].map((q) => (
-                    <button key={q} onClick={() => setQty(q)} className="hover:text-purple-400 transition-colors">{q}</button>
+                    <button key={q} onClick={() => setQty(q)} className="hover:text-[#B89B5E] transition-colors font-bold">{q}</button>
                   ))}
                   <span>2000</span>
                 </div>
@@ -198,8 +162,12 @@ export default function BrandWorks() {
                     { qty: 500, label: "500+", discount: "25% off" },
                   ].map((t) => (
                     <button key={t.qty} onClick={() => setQty(t.qty)}
-                      className={`py-2 rounded-xl text-[11px] text-center border transition-all ${qty >= t.qty ? "status-complete" : "border-white/10 text-white/45 glass hover:border-white/25"}`}>
-                      <div className="font-semibold">{t.label}</div>
+                      className={`py-2 rounded-xl text-[11px] text-center border font-bold transition-all ${
+                        qty >= t.qty 
+                          ? "bg-emerald-500/10 text-emerald-700 border-emerald-500/30" 
+                          : (isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#6F6B66] hover:bg-[#EAE5DA]" : "border-white/10 text-white/45 bg-[#1C1C2B]")
+                      }`}>
+                      <div>{t.label}</div>
                       <div>{t.discount}</div>
                     </button>
                   ))}
@@ -207,16 +175,17 @@ export default function BrandWorks() {
               </div>
 
               {/* CTA */}
-              <div className="flex gap-3">
-                <button className="flex-1 py-4 rounded-2xl font-semibold text-[15px]"
-                  style={{ background: "linear-gradient(135deg, #D4AF37, #B8860B)", color: "#05010A" }}>
+              <div className="flex gap-3 md:col-span-2">
+                <button className="btn-gold-champagne flex-1 py-4 font-bold text-[15px] rounded-full justify-center">
                   Place Order — ₹{totalPrice.toLocaleString()}
                 </button>
-                <button className="px-6 py-4 rounded-2xl glass border border-white/20 text-white/80 font-medium hover:border-white/40 transition-all">
+                <button className={`px-6 py-4 rounded-full font-bold transition-all border ${
+                  isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]" : "btn-hero-outline"
+                }`}>
                   Get Quote
                 </button>
               </div>
-              <p className="text-[11px] text-white/30 text-center">
+              <p className={`text-[11px] text-center font-medium md:col-span-2 ${isLightMode ? "text-[#6F6B66]" : "text-white/30"}`}>
                 Free design proof within 24h · 7-day delivery · 100% quality guarantee
               </p>
             </div>

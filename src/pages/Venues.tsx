@@ -98,25 +98,25 @@ const venues = [
     cap: 800,
     price: 120000,
     rating: 4.8,
-    reviews: 189,
+    reviews: 184,
     type: "Garden Venue",
-    img: "1519167758481-83f550bb49b3",
-    amenities: ["Open Air", "Lawn", "Decor", "Parking"],
+    img: "1540575467063-178a50c2df87",
+    amenities: ["Rooftop", "Garden", "Valet", "Stage"],
     available: true,
-    address: "Lutyens' Delhi"
+    address: "Chhatarpur, New Delhi"
   },
   {
-    name: "Azure Beachfront Hall",
+    name: "Oceanfront Palms Resort",
     city: "Goa",
-    cap: 500,
-    price: 95000,
-    rating: 4.9,
-    reviews: 312,
+    cap: 600,
+    price: 250000,
+    rating: 4.95,
+    reviews: 310,
     type: "Beach Venue",
     img: "1507525428034-b723cf961d3e",
-    amenities: ["Beachfront", "Pool", "Bar", "DJ System"],
+    amenities: ["Beachfront", "Pool Side", "Sunset Lawn", "DJ Setup"],
     available: true,
-    address: "Candolim Beach, North Goa"
+    address: "Candolim Beach, Goa"
   },
   {
     name: "The Emerald Palace",
@@ -136,8 +136,8 @@ const venues = [
 const cities = ["All Cities", "Bangalore", "Mumbai", "Delhi", "Goa", "Jaipur"];
 const types = ["All Types", "Heritage Venue", "Garden Venue", "Glasshouse", "Lakefront Villa", "Ballroom", "Banquet Hall", "Beach Venue"];
 
-export default function Venues() {
-  const [city, setCity] = useState("Bangalore"); // Default to Bangalore as priority
+export default function Venues({ isLightMode = false }: { isLightMode?: boolean }) {
+  const [city, setCity] = useState("Bangalore");
   const [type, setType] = useState("All Types");
   const [maxPrice, setMaxPrice] = useState(400000);
   const [minCap, setMinCap] = useState(0);
@@ -151,38 +151,52 @@ export default function Venues() {
   );
 
   return (
-    <div className="min-h-screen pt-24 pb-20 bg-[#0E051D] text-[#F8F5FF]">
+    <div className={`min-h-screen pt-10 pb-20 px-6 transition-colors duration-300 ${
+      isLightMode ? "bg-[#F7F4EE] text-[#111116]" : "bg-[#0B0B14] text-[#F7F4EE]"
+    }`}>
       {/* Header */}
-      <div className="px-6 max-w-[1440px] mx-auto mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-pink-300 text-[11px] font-medium uppercase tracking-[0.2em] mb-3">
+      <div className="max-w-[1440px] mx-auto mb-10">
+        <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-[0.25em] mb-3 border ${
+          isLightMode
+            ? "bg-[#B89B5E]/10 text-[#B89B5E] border-[#B89B5E]/30"
+            : "bg-white/5 border-white/15 text-[#E8C98A]"
+        }`}>
           Prime Locations · Featuring Bangalore Estates
         </div>
-        <h1 className="font-serif font-light text-4xl md:text-6xl text-white mb-2">
+        <h1 className={`font-serif font-bold text-4xl md:text-5xl mb-2 ${
+          isLightMode ? "text-[#111116]" : "text-white"
+        }`}>
           Curated Luxury Estates & Venues
         </h1>
-        <p className="text-white/50 text-[14px]">
+        <p className={`text-[14px] font-medium ${
+          isLightMode ? "text-[#6F6B66]" : "text-white/50"
+        }`}>
           Showing {filtered.length} handpicked luxury venues in {city === "All Cities" ? "all cities" : city}
         </p>
       </div>
 
-      <div className="px-6 max-w-[1440px] mx-auto flex gap-8 flex-col lg:flex-row">
+      <div className="max-w-[1440px] mx-auto flex gap-8 flex-col lg:flex-row">
         {/* Filters sidebar */}
         <div className="lg:w-80 shrink-0 space-y-5">
-          <div className="bg-[#170A2D] rounded-2xl p-6 border border-purple-500/25 shadow-xl">
-            <h3 className="font-serif text-xl font-normal text-white mb-5">Refine Estates</h3>
+          <div className={`rounded-3xl p-6 border ${
+            isLightMode ? "bg-white border-[#DED9CF] shadow-sm text-[#111116]" : "bg-[#151522] border-white/10 shadow-xl text-white"
+          }`}>
+            <h3 className="font-serif font-bold text-xl mb-5">Refine Estates</h3>
 
             {/* City Selection */}
             <div className="mb-6">
-              <label className="block text-[11px] font-medium text-white/50 mb-2 uppercase tracking-wider">City Location</label>
+              <label className={`block text-[11px] font-bold mb-2 uppercase tracking-wider ${
+                isLightMode ? "text-[#6F6B66]" : "text-white/50"
+              }`}>City Location</label>
               <div className="flex flex-wrap gap-1.5">
                 {cities.map((c) => (
                   <button
                     key={c}
                     onClick={() => setCity(c)}
-                    className={`px-3 py-1.5 rounded-full text-[12px] font-medium transition-all ${
+                    className={`px-3 py-1.5 rounded-full text-[12px] font-bold transition-all ${
                       city === c
-                        ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md"
-                        : "bg-white/5 border border-purple-500/20 text-white/60 hover:text-white"
+                        ? "btn-gold-champagne !px-3 !py-1.5 text-[#111116] shadow-md"
+                        : isLightMode ? "bg-[#F7F4EE] border border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]" : "bg-white/5 border border-white/10 text-white/60 hover:text-white"
                     }`}>
                     {c} {c === "Bangalore" ? "📍" : ""}
                   </button>
@@ -192,16 +206,18 @@ export default function Venues() {
 
             {/* Venue Type */}
             <div className="mb-6">
-              <label className="block text-[11px] font-medium text-white/50 mb-2 uppercase tracking-wider">Estate Type</label>
+              <label className={`block text-[11px] font-bold mb-2 uppercase tracking-wider ${
+                isLightMode ? "text-[#6F6B66]" : "text-white/50"
+              }`}>Estate Type</label>
               <div className="flex flex-wrap gap-1.5">
                 {types.map((t) => (
                   <button
                     key={t}
                     onClick={() => setType(t)}
-                    className={`px-3 py-1.5 rounded-full text-[12px] font-medium transition-all ${
+                    className={`px-3 py-1.5 rounded-full text-[12px] font-bold transition-all ${
                       type === t
-                        ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md"
-                        : "bg-white/5 border border-purple-500/20 text-white/60 hover:text-white"
+                        ? "btn-gold-champagne !px-3 !py-1.5 text-[#111116] shadow-md"
+                        : isLightMode ? "bg-[#F7F4EE] border border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]" : "bg-white/5 border border-white/10 text-white/60 hover:text-white"
                     }`}>
                     {t}
                   </button>
@@ -211,7 +227,9 @@ export default function Venues() {
 
             {/* Max Price */}
             <div className="mb-6">
-              <label className="block text-[11px] font-medium text-white/50 mb-2 uppercase tracking-wider">Max Rental Price / Day</label>
+              <label className={`block text-[11px] font-bold mb-2 uppercase tracking-wider ${
+                isLightMode ? "text-[#6F6B66]" : "text-white/50"
+              }`}>Max Rental Price / Day</label>
               <input
                 type="range"
                 min={80000}
@@ -219,18 +237,22 @@ export default function Venues() {
                 step={20000}
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
-                className="w-full accent-[#E2C08D]"
+                className="w-full accent-[#B89B5E]"
               />
-              <div className="flex justify-between text-[12px] font-mono text-white/40 mt-1">
+              <div className={`flex justify-between text-[12px] font-mono mt-1 ${
+                isLightMode ? "text-[#6F6B66]" : "text-white/40"
+              }`}>
                 <span>₹80K</span>
-                <span className="text-amber-200 font-semibold">₹{(maxPrice / 100000).toFixed(1)} Lakhs</span>
+                <span className="font-bold text-[#B89B5E]">₹{(maxPrice / 100000).toFixed(1)} Lakhs</span>
                 <span>₹4.0L</span>
               </div>
             </div>
 
             {/* Min Capacity */}
             <div>
-              <label className="block text-[11px] font-medium text-white/50 mb-2 uppercase tracking-wider">Min Guest Capacity</label>
+              <label className={`block text-[11px] font-bold mb-2 uppercase tracking-wider ${
+                isLightMode ? "text-[#6F6B66]" : "text-white/50"
+              }`}>Min Guest Capacity</label>
               <input
                 type="range"
                 min={0}
@@ -238,25 +260,29 @@ export default function Venues() {
                 step={100}
                 value={minCap}
                 onChange={(e) => setMinCap(Number(e.target.value))}
-                className="w-full accent-[#E2C08D]"
+                className="w-full accent-[#B89B5E]"
               />
-              <div className="flex justify-between text-[12px] font-mono text-white/40 mt-1">
+              <div className={`flex justify-between text-[12px] font-mono mt-1 ${
+                isLightMode ? "text-[#6F6B66]" : "text-white/40"
+              }`}>
                 <span>Any</span>
-                <span className="text-amber-200 font-semibold">{minCap}+ guests</span>
+                <span className="font-bold text-[#B89B5E]">{minCap}+ guests</span>
                 <span>2,000</span>
               </div>
             </div>
           </div>
 
           {/* Quick Bangalore Highlights */}
-          <div className="bg-[#111116] rounded-2xl p-5 border border-amber-300/20">
-            <h3 className="font-serif text-lg text-amber-200 mb-2 font-normal">Bangalore Concierge Desk</h3>
-            <p className="text-white/55 text-[12.5px] leading-relaxed mb-4">
+          <div className={`rounded-3xl p-5 border ${
+            isLightMode ? "bg-white border-[#DED9CF] text-[#111116] shadow-sm" : "bg-[#151522] border-white/10 text-white"
+          }`}>
+            <h3 className="text-lg font-serif font-bold mb-2 text-[#B89B5E]">Bangalore Concierge Desk</h3>
+            <p className={`text-[12.5px] leading-relaxed mb-4 ${isLightMode ? "text-[#6F6B66]" : "text-white/55"}`}>
               Need exclusive access to Bangalore Palace Grounds, Nandi Hills vineyards, or Taj Leela Ballrooms?
             </p>
             <button
               onClick={() => setCity("Bangalore")}
-              className="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-[12.5px] font-medium transition-all">
+              className="btn-gold-champagne w-full py-2.5 rounded-full text-[12.5px] font-bold justify-center">
               Filter Bangalore Estates →
             </button>
           </div>
@@ -267,55 +293,67 @@ export default function Venues() {
           {selected ? (
             // Venue detail view
             <div className="animate-fade-in">
-              <button onClick={() => setSelected(null)} className="flex items-center gap-2 text-[13px] text-white/60 hover:text-white mb-6 transition-colors">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 3L5 8l5 5"/></svg>
+              <button onClick={() => setSelected(null)} className={`flex items-center gap-2 text-[13px] mb-6 font-bold transition-colors ${
+                isLightMode ? "text-[#6F6B66] hover:text-[#111116]" : "text-white/60 hover:text-white"
+              }`}>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10 3L5 8l5 5"/></svg>
                 Back to all estates
               </button>
               {(() => {
                 const v = venues.find((x) => x.name === selected)!;
                 return (
-                  <div className="bg-[#111116] rounded-3xl overflow-hidden border border-white/12 shadow-2xl">
+                  <div className={`rounded-3xl overflow-hidden border shadow-xl ${
+                    isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/12 text-white"
+                  }`}>
                     <img src={`https://images.unsplash.com/photo-${v.img}?w=1200&h=500&fit=crop&auto=format`}
                       alt={v.name} className="w-full h-80 object-cover"/>
                     <div className="p-8">
                       <div className="flex items-start justify-between mb-4">
                         <div>
-                          <h2 className="font-serif font-light text-3xl text-white">{v.name}</h2>
-                          <p className="text-amber-200/80 text-[14px] mt-1 font-medium">📍 {v.address || `${v.city} · ${v.type}`}</p>
+                          <h2 className="font-serif font-bold text-3xl">{v.name}</h2>
+                          <p className="text-[14px] mt-1 font-semibold text-[#B89B5E]">📍 {v.address || `${v.city} · ${v.type}`}</p>
                         </div>
                         <div className="text-right font-mono">
-                          <div className="text-3xl text-amber-200 font-semibold">₹{(v.price / 100000).toFixed(2)}L</div>
-                          <div className="text-white/40 text-[12px]">per day rental</div>
+                          <div className="text-3xl font-extrabold text-[#B89B5E]">₹{(v.price / 100000).toFixed(2)}L</div>
+                          <div className={`text-[12px] ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>per day rental</div>
                         </div>
                       </div>
 
                       <div className="flex flex-wrap gap-4 mb-6">
-                        <div className="bg-white/5 rounded-xl px-4 py-2.5 text-[13px] border border-white/10 font-mono">
-                          <span className="text-amber-300">★ {v.rating}</span>
-                          <span className="text-white/40 ml-1">({v.reviews} verified reviews)</span>
+                        <div className={`rounded-2xl px-4 py-2.5 text-[13px] border font-mono ${
+                          isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116]" : "bg-white/5 border-white/10 text-white"
+                        }`}>
+                          <span className="text-[#B89B5E] font-bold">★ {v.rating}</span>
+                          <span className={`${isLightMode ? "text-[#6F6B66]" : "text-white/40"} ml-1`}>({v.reviews} verified reviews)</span>
                         </div>
-                        <div className="bg-white/5 rounded-xl px-4 py-2.5 text-[13px] text-white/80 border border-white/10">
+                        <div className={`rounded-2xl px-4 py-2.5 text-[13px] font-semibold border ${
+                          isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116]" : "bg-white/5 border-white/10 text-white/80"
+                        }`}>
                           👥 Up to {v.cap.toLocaleString()} guests
                         </div>
-                        <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 rounded-xl px-4 py-2.5 text-[12.5px] font-medium">
+                        <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 rounded-2xl px-4 py-2.5 text-[12.5px] font-bold">
                           ✓ Available for Booking
                         </div>
                       </div>
 
                       <div className="mb-8">
-                        <h4 className="text-[12px] uppercase tracking-wider text-white/50 mb-3">Estate Amenities & Specifications</h4>
+                        <h4 className={`text-[12px] uppercase font-bold tracking-wider mb-3 ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>Estate Amenities & Specifications</h4>
                         <div className="flex flex-wrap gap-2">
                           {v.amenities.map((a) => (
-                            <span key={a} className="bg-white/5 px-3.5 py-1.5 rounded-full text-[12.5px] text-white/80 border border-white/12">{a}</span>
+                            <span key={a} className={`px-3.5 py-1.5 rounded-full text-[12.5px] font-semibold border ${
+                              isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116]" : "bg-white/5 border-white/12 text-white/80"
+                            }`}>{a}</span>
                           ))}
                         </div>
                       </div>
 
                       <div className="flex gap-4">
-                        <button className="flex-1 py-4 rounded-xl font-semibold text-[#09090C] bg-[#E2C08D] hover:bg-[#eddcb8] transition-all">
+                        <button className="btn-gold-champagne flex-1 py-4 font-bold rounded-full justify-center">
                           Reserve This Estate
                         </button>
-                        <button className="px-8 py-4 rounded-xl bg-white/5 border border-white/20 text-white font-medium hover:bg-white/10 transition-all">
+                        <button className={`px-8 py-4 rounded-full font-bold transition-all border ${
+                          isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] hover:bg-[#EAE5DA]" : "btn-hero-outline"
+                        }`}>
                           Schedule Site Visit
                         </button>
                       </div>
@@ -328,36 +366,40 @@ export default function Venues() {
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {filtered.map((v) => (
                 <button key={v.name} onClick={() => setSelected(v.name)}
-                  className="bg-[#111116] rounded-2xl overflow-hidden border border-white/10 hover:border-amber-300/30 text-left transition-all group">
+                  className={`rounded-3xl overflow-hidden border text-left transition-all group ${
+                    isLightMode
+                      ? "bg-white border-[#DED9CF] hover:border-[#B89B5E] shadow-sm"
+                      : "bg-[#151522] border-white/10 hover:border-[#B89B5E]/40"
+                  }`}>
                   <div className="relative h-52">
                     <img src={`https://images.unsplash.com/photo-${v.img}?w=600&h=400&fit=crop&auto=format`}
                       alt={v.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#111116] via-transparent to-transparent"/>
-                    <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md rounded-lg px-2.5 py-1 text-[10.5px] uppercase font-medium text-amber-200 border border-amber-300/20">{v.type}</div>
-                    <div className="absolute top-3 right-3 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 rounded-lg px-2.5 py-1 text-[10.5px] font-medium">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#111116]/80 via-transparent to-transparent"/>
+                    <div className="absolute top-3 left-3 bg-[#111116]/80 backdrop-blur-md rounded-lg px-2.5 py-1 text-[10.5px] uppercase font-bold text-[#E8C98A] shadow-sm">{v.type}</div>
+                    <div className="absolute top-3 right-3 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 rounded-lg px-2.5 py-1 text-[10.5px] font-bold">
                       Available
                     </div>
                   </div>
                   <div className="p-5">
-                    <h3 className="font-serif font-normal text-xl text-white group-hover:text-amber-200 transition-colors mb-1">{v.name}</h3>
-                    <p className="text-white/50 text-[12px] mb-3">📍 {v.city} · 👥 {v.cap.toLocaleString()} guests</p>
+                    <h3 className={`font-serif font-bold text-xl mb-1 ${isLightMode ? "text-[#111116] group-hover:text-[#B89B5E]" : "text-white group-hover:text-[#E8C98A]"}`}>{v.name}</h3>
+                    <p className={`text-[12px] mb-3 ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>📍 {v.city} · 👥 {v.cap.toLocaleString()} guests</p>
                     <div className="flex flex-wrap gap-1.5 mb-4">
                       {v.amenities.slice(0, 3).map((a) => (
-                        <span key={a} className="px-2.5 py-0.5 rounded-full text-[11px] text-white/60 border border-white/10">{a}</span>
+                        <span key={a} className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#6F6B66]" : "border-white/10 text-white/60"}`}>{a}</span>
                       ))}
                     </div>
-                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                    <div className={`flex items-center justify-between pt-3 border-t ${isLightMode ? "border-[#DED9CF]" : "border-white/10"}`}>
                       <div>
-                        <div className="font-mono font-medium text-lg text-amber-200">₹{(v.price / 100000).toFixed(2)}L</div>
-                        <div className="text-white/40 text-[10.5px]">per day</div>
+                        <div className="font-mono font-extrabold text-lg text-[#B89B5E]">₹{(v.price / 100000).toFixed(2)}L</div>
+                        <div className={`text-[10.5px] ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>per day</div>
                       </div>
-                      <div className="text-amber-300 text-[13px] font-medium">★ {v.rating} <span className="text-white/40 font-normal">({v.reviews})</span></div>
+                      <div className="text-[#B89B5E] text-[13px] font-bold">★ {v.rating} <span className={`${isLightMode ? "text-[#6F6B66]" : "text-white/40"} font-normal text-[11px]`}>({v.reviews})</span></div>
                     </div>
                   </div>
                 </button>
               ))}
               {filtered.length === 0 && (
-                <div className="col-span-full text-center py-20 text-white/40">
+                <div className={`col-span-full text-center py-20 ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>
                   <div className="text-4xl mb-4">🏛️</div>
                   <p>No venues match your filters. Try selecting &quot;All Cities&quot; or increasing your price limit.</p>
                 </div>

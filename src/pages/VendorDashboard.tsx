@@ -42,22 +42,23 @@ const calendarDays = Array.from({ length: 30 }, (_, i) => ({
   pending: [10, 25, 29].includes(i + 1),
 }));
 
-export default function VendorDashboard() {
+export default function VendorDashboard({ isLightMode = false }: { isLightMode?: boolean }) {
   const [activeTab, setActiveTab] = useState("Today");
   const tabs = ["Today", "Earnings", "Calendar", "QR Analytics", "BrandWorks", "Reviews", "Portfolio"];
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-6">
+    <div className={`min-h-screen pt-8 pb-20 px-6 transition-colors duration-300 ${
+      isLightMode ? "bg-[#F7F4EE] text-[#111116]" : "bg-[#0B0B14] text-[#F7F4EE]"
+    }`}>
       <div className="max-w-[1440px] mx-auto">
         {/* Header */}
         <div className="flex flex-wrap items-center gap-5 mb-8">
-          <div className="w-16 h-16 rounded-2xl flex items-center justify-center font-display font-700 text-xl text-white"
-            style={{ background: "linear-gradient(135deg, #10B981, #0EA5E9)" }}>
+          <div className="w-16 h-16 rounded-2xl flex items-center justify-center font-serif font-bold text-xl text-[#111116] shadow-md grad-champagne">
             BD
           </div>
           <div>
-            <h1 className="font-display font-700 text-2xl text-white">Bliss Decor Studio</h1>
-            <p className="text-white/50 text-[13px]">Vendor Dashboard · Delhi · ★ 4.8 (215 reviews)</p>
+            <h1 className={`font-serif font-bold text-3xl ${isLightMode ? "text-[#111116]" : "text-white"}`}>Bliss Decor Studio</h1>
+            <p className={`text-[13px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>Vendor Dashboard · Delhi · ★ 4.8 (215 reviews)</p>
           </div>
           <div className="ml-auto flex gap-3">
             {[
@@ -65,59 +66,69 @@ export default function VendorDashboard() {
               { label: "Active Bookings", value: "6" },
               { label: "Completion Rate", value: "98%" },
             ].map((s) => (
-              <div key={s.label} className="glass rounded-xl px-4 py-2.5 text-center border border-white/10">
-                <div className="font-display font-700 text-[18px] grad-primary">{s.value}</div>
-                <div className="text-[11px] text-white/40">{s.label}</div>
+              <div key={s.label} className={`rounded-2xl px-4 py-2.5 text-center border ${
+                isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/10"
+              }`}>
+                <div className="font-serif font-bold text-[18px] text-[#B89B5E]">{s.value}</div>
+                <div className={`text-[11px] font-semibold uppercase tracking-wider ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>{s.label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 overflow-x-auto mb-8 pb-1">
-          {tabs.map((t) => (
-            <button key={t} onClick={() => setActiveTab(t)}
-              className={`px-5 py-2.5 rounded-xl text-[13px] font-medium whitespace-nowrap border transition-all shrink-0 ${
-                activeTab === t ? "tab-active border-purple-500/40" : "text-white/55 border-white/8 hover:border-white/20 hover:text-white glass"
-              }`}>
-              {t}
-            </button>
-          ))}
+        <div className="flex gap-2 overflow-x-auto mb-8 pb-1">
+          {tabs.map((t) => {
+            const isActive = activeTab === t;
+            return (
+              <button key={t} onClick={() => setActiveTab(t)}
+                className={`px-5 py-2.5 rounded-full text-[13px] font-bold whitespace-nowrap border transition-all shrink-0 ${
+                  isLightMode
+                    ? isActive
+                      ? "bg-[#B89B5E] text-[#111116] border-[#B89B5E] shadow-sm"
+                      : "bg-white border-[#DED9CF] text-[#6F6B66] hover:bg-[#E8C98A]/20"
+                    : isActive
+                      ? "btn-gold-champagne"
+                      : "text-white/60 border-white/10 hover:border-[#B89B5E]/50 hover:text-white bg-[#151522]"
+                }`}>
+                {t}
+              </button>
+            );
+          })}
         </div>
 
         {/* Today's Bookings */}
         {activeTab === "Today" && (
           <div className="animate-fade-in space-y-5">
-            <h2 className="font-display font-600 text-[17px] mb-2">Today&apos;s Bookings — Sep 5, 2025</h2>
+            <h2 className={`font-serif font-bold text-[20px] mb-2 ${isLightMode ? "text-[#111116]" : "text-white"}`}>Today&apos;s Bookings — Sep 5, 2025</h2>
             {todayBookings.map((b) => (
-              <div key={b.event} className="glass rounded-2xl p-6 border border-white/10">
+              <div key={b.event} className={`rounded-3xl p-6 border transition-all hover:shadow-lg ${
+                isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/10 text-white"
+              }`}>
                 <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                   <div>
-                    <h3 className="font-display font-600 text-[16px] text-white">{b.event}</h3>
-                    <p className="text-white/50 text-[13px]">🕐 {b.time} · 👥 {b.guests} guests</p>
+                    <h3 className="font-serif font-bold text-[18px]">{b.event}</h3>
+                    <p className={`text-[13px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>🕐 {b.time} · 👥 {b.guests} guests</p>
                   </div>
                   <div className="text-right">
-                    <div className="font-display font-700 text-[18px]" style={{ color: "#10B981" }}>₹{(b.amount / 1000).toFixed(0)}K</div>
-                    <span className={`text-[12px] font-medium ${b.status === "confirmed" ? "text-green-400" : "text-purple-400"}`}>
+                    <div className="font-serif font-bold text-[20px] text-[#B89B5E]">₹{(b.amount / 1000).toFixed(0)}K</div>
+                    <span className="text-[12px] font-bold text-emerald-600">
                       {b.status === "confirmed" ? "✓ Confirmed" : "⟳ Setting up"}
                     </span>
                   </div>
                 </div>
                 <div className="flex gap-3 mt-4">
-                  <button className="px-4 py-2 rounded-xl text-[13px] font-medium text-white border border-white/15 hover:border-white/35 glass transition-all">
+                  <button className={`px-5 py-2 rounded-full text-[13px] font-bold transition-all border ${
+                    isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#111116] hover:bg-[#E8C98A]/20" : "bg-white/10 border-white/15 text-white"
+                  }`}>
                     View Details
                   </button>
-                  <button className="px-4 py-2 rounded-xl text-[13px] font-medium text-white"
-                    style={{ background: "linear-gradient(135deg, #6A38FF, #8B5CF6)" }}>
+                  <button className="btn-gold-champagne px-5 py-2 rounded-full text-[13px] font-bold">
                     Mark Complete
                   </button>
                 </div>
               </div>
             ))}
-            <div className="glass rounded-2xl p-6 border border-amber-500/20">
-              <h3 className="font-600 text-[14px] text-amber-400 mb-2">📋 Manager Notes</h3>
-              <p className="text-white/65 text-[13px]">Gupta Wedding — Bride prefers pastel pink & white theme. Phoolon ki Chaadar arrangement required. Confirm with manager Rohan by 9 AM.</p>
-            </div>
           </div>
         )}
 
@@ -131,23 +142,27 @@ export default function VendorDashboard() {
                 { label: "YTD Total", value: "₹4.84L", delta: "+32%", positive: true },
                 { label: "Avg Per Event", value: "₹62K", delta: "+5%", positive: true },
               ].map((s) => (
-                <div key={s.label} className="glass rounded-2xl p-5 border border-white/10">
-                  <div className="text-[12px] text-white/45 mb-1">{s.label}</div>
-                  <div className="font-display font-700 text-[22px] text-white">{s.value}</div>
-                  <div className={`text-[11px] font-medium mt-1 ${s.positive ? "text-green-400" : "text-red-400"}`}>{s.delta} vs prev</div>
+                <div key={s.label} className={`rounded-2xl p-5 border ${
+                  isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/10"
+                }`}>
+                  <div className={`text-[12px] font-medium mb-1 ${isLightMode ? "text-[#6F6B66]" : "text-white/45"}`}>{s.label}</div>
+                  <div className={`font-serif font-bold text-[24px] ${isLightMode ? "text-[#111116]" : "text-white"}`}>{s.value}</div>
+                  <div className={`text-[11px] font-semibold mt-1 ${s.positive ? "text-emerald-600" : "text-rose-600"}`}>{s.delta} vs prev</div>
                 </div>
               ))}
             </div>
             {/* Bar chart */}
-            <div className="glass rounded-2xl p-6 border border-white/10">
-              <h3 className="font-600 text-[14px] text-white/60 mb-5">Monthly Earnings (₹)</h3>
+            <div className={`rounded-3xl p-6 border ${
+              isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/10"
+            }`}>
+              <h3 className={`font-serif font-bold text-[16px] mb-5 ${isLightMode ? "text-[#111116]" : "text-white"}`}>Monthly Earnings (₹)</h3>
               <div className="flex items-end gap-3 h-40">
                 {earningsData.map((d) => (
                   <div key={d.month} className="flex-1 flex flex-col items-center gap-2">
-                    <div className="text-[11px] text-white/50">₹{(d.amount / 1000).toFixed(0)}K</div>
+                    <div className={`text-[11px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>₹{(d.amount / 1000).toFixed(0)}K</div>
                     <div className="w-full rounded-t-lg transition-all"
-                      style={{ height: `${(d.amount / maxEarnings) * 100}%`, background: "linear-gradient(to top, #6A38FF, #8B5CF6)", minHeight: 8 }}/>
-                    <div className="text-[11px] text-white/40">{d.month}</div>
+                      style={{ height: `${(d.amount / maxEarnings) * 100}%`, background: "linear-gradient(to top, #B89B5E, #E8C98A)", minHeight: 8 }}/>
+                    <div className={`text-[11px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/40"}`}>{d.month}</div>
                   </div>
                 ))}
               </div>
@@ -158,29 +173,33 @@ export default function VendorDashboard() {
         {/* Calendar */}
         {activeTab === "Calendar" && (
           <div className="animate-fade-in">
-            <div className="glass rounded-2xl p-6 border border-white/10">
-              <h2 className="font-display font-600 text-[17px] mb-5">September 2025</h2>
+            <div className={`rounded-3xl p-6 border ${
+              isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/10"
+            }`}>
+              <h2 className="font-serif font-bold text-[20px] mb-5">September 2025</h2>
               <div className="grid grid-cols-7 gap-1.5 mb-2">
                 {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
-                  <div key={d} className="text-center text-[11px] text-white/35 py-1">{d}</div>
+                  <div key={d} className={`text-center text-[11px] font-bold py-1 ${isLightMode ? "text-[#6F6B66]" : "text-white/35"}`}>{d}</div>
                 ))}
               </div>
               <div className="grid grid-cols-7 gap-1.5">
-                {/* offset for Sep starting on Monday */}
                 {calendarDays.map((d) => (
                   <div key={d.day}
                     className={`aspect-square rounded-xl flex items-center justify-center text-[13px] font-medium transition-all cursor-pointer ${
-                      d.booked ? "text-white glow-primary" : d.pending ? "text-amber-400 border border-amber-500/30" : "text-white/40 glass border border-white/6 hover:border-white/20"
-                    }`}
-                    style={d.booked ? { background: "linear-gradient(135deg, #6A38FF, #8B5CF6)" } : d.pending ? { background: "rgba(245,158,11,0.15)" } : {}}>
+                      d.booked 
+                        ? "text-[#111116] font-bold shadow-sm grad-champagne" 
+                        : d.pending 
+                          ? isLightMode ? "text-[#B89B5E] bg-[#E8C98A]/20 border border-[#B89B5E]/30 font-semibold" : "text-[#E8C98A] border border-[#B89B5E]/30" 
+                          : isLightMode ? "text-[#6F6B66] bg-[#F7F4EE] border border-[#DED9CF] hover:bg-[#E8C98A]/10" : "text-white/40 bg-white/5 border border-white/6 hover:border-white/20"
+                    }`}>
                     {d.day}
                   </div>
                 ))}
               </div>
               <div className="flex gap-4 mt-4 text-[12px]">
-                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-md" style={{ background: "linear-gradient(135deg, #6A38FF, #8B5CF6)" }}/><span className="text-white/55">Booked</span></div>
-                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-md bg-amber-500/40"/><span className="text-white/55">Pending</span></div>
-                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-md bg-white/8"/><span className="text-white/55">Available</span></div>
+                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-md grad-champagne"/><span className={isLightMode ? "text-[#6F6B66]" : "text-white/55"}>Booked</span></div>
+                <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-md bg-[#E8C98A]/40 border border-[#B89B5E]/30"/><span className={isLightMode ? "text-[#6F6B66]" : "text-white/55"}>Pending</span></div>
+                <div className="flex items-center gap-2"><div className={`w-3 h-3 rounded-md ${isLightMode ? "bg-[#F7F4EE] border border-[#DED9CF]" : "bg-white/8"}`}/><span className={isLightMode ? "text-[#6F6B66]" : "text-white/55"}>Available</span></div>
               </div>
             </div>
           </div>
@@ -196,24 +215,28 @@ export default function VendorDashboard() {
                 { label: "Conversion Rate", value: "26.6%", icon: "📈" },
                 { label: "QR Revenue", value: "₹2.1L", icon: "💰" },
               ].map((s) => (
-                <div key={s.label} className="glass rounded-2xl p-5 border border-white/10">
+                <div key={s.label} className={`rounded-2xl p-5 border ${
+                  isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/10"
+                }`}>
                   <div className="text-2xl mb-2">{s.icon}</div>
-                  <div className="font-display font-700 text-[22px] grad-primary">{s.value}</div>
-                  <div className="text-[12px] text-white/45 mt-1">{s.label}</div>
+                  <div className="font-serif font-bold text-[24px] text-[#B89B5E]">{s.value}</div>
+                  <div className={`text-[12px] font-medium mt-1 ${isLightMode ? "text-[#6F6B66]" : "text-white/45"}`}>{s.label}</div>
                 </div>
               ))}
             </div>
-            <div className="glass rounded-2xl p-6 border border-white/10">
-              <h3 className="font-600 text-[14px] text-white/60 mb-4">Recent QR Activity</h3>
+            <div className={`rounded-3xl p-6 border ${
+              isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/10"
+            }`}>
+              <h3 className={`font-serif font-bold text-[16px] mb-4 ${isLightMode ? "text-[#111116]" : "text-white"}`}>Recent QR Activity</h3>
               <div className="space-y-3">
                 {qrScans.map((q) => (
                   <div key={q.date} className="flex items-center gap-4">
-                    <span className="text-[13px] text-white/50 w-16">{q.date}</span>
-                    <div className="flex-1 h-2 bg-white/8 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: `${(q.scans / 70) * 100}%`, background: "linear-gradient(90deg, #6A38FF, #8B5CF6)" }}/>
+                    <span className={`text-[13px] font-medium w-16 ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>{q.date}</span>
+                    <div className={`flex-1 h-2 rounded-full overflow-hidden ${isLightMode ? "bg-[#F7F4EE]" : "bg-white/8"}`}>
+                      <div className="h-full rounded-full grad-champagne" style={{ width: `${(q.scans / 70) * 100}%` }}/>
                     </div>
-                    <span className="text-[13px] text-white font-medium w-12">{q.scans}</span>
-                    <span className="text-[12px] text-green-400 w-12">{q.conversions} ✓</span>
+                    <span className={`text-[13px] font-semibold w-12 ${isLightMode ? "text-[#111116]" : "text-white"}`}>{q.scans}</span>
+                    <span className="text-[12px] font-bold text-emerald-600 w-12">{q.conversions} ✓</span>
                   </div>
                 ))}
               </div>
@@ -225,19 +248,20 @@ export default function VendorDashboard() {
         {activeTab === "Reviews" && (
           <div className="animate-fade-in space-y-4">
             {reviews.map((r, i) => (
-              <div key={i} className="glass rounded-2xl p-6 border border-white/10">
+              <div key={i} className={`rounded-3xl p-6 border ${
+                isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/10"
+              }`}>
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full flex items-center justify-center font-semibold text-[13px] text-white"
-                      style={{ background: "linear-gradient(135deg, #6A38FF, #8B5CF6)" }}>{r.client[0]}</div>
-                    <span className="font-medium text-white text-[14px]">{r.client}</span>
+                    <div className="w-9 h-9 rounded-full flex items-center justify-center font-serif font-bold text-[13px] text-[#111116] shadow-sm grad-champagne">{r.client[0]}</div>
+                    <span className={`font-serif font-bold text-[16px] ${isLightMode ? "text-[#111116]" : "text-white"}`}>{r.client}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-amber-400">{"★".repeat(r.rating)}</span>
-                    <span className="text-white/30 text-[12px]">{r.date}</span>
+                    <span className="text-[#B89B5E]">{"★".repeat(r.rating)}</span>
+                    <span className={`text-[12px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/30"}`}>{r.date}</span>
                   </div>
                 </div>
-                <p className="text-white/65 text-[13px] leading-relaxed">&ldquo;{r.comment}&rdquo;</p>
+                <p className={`text-[14px] leading-relaxed font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/65"}`}>&ldquo;{r.comment}&rdquo;</p>
               </div>
             ))}
           </div>
@@ -248,21 +272,25 @@ export default function VendorDashboard() {
           <div className="animate-fade-in">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {portfolio.map((p) => (
-                <div key={p.title} className="glass rounded-3xl overflow-hidden border border-white/10 hover-lift">
+                <div key={p.title} className={`rounded-3xl overflow-hidden border transition-all hover:shadow-lg ${
+                  isLightMode ? "bg-white border-[#DED9CF]" : "bg-[#151522] border-white/10"
+                }`}>
                   <img src={`https://images.unsplash.com/photo-${p.img}?w=600&h=350&fit=crop&auto=format`}
                     alt={p.title} className="w-full h-52 object-cover"/>
                   <div className="p-5 flex items-center justify-between">
                     <div>
-                      <h3 className="font-display font-600 text-[15px] text-white">{p.title}</h3>
-                      <p className="text-white/45 text-[12px]">{p.type}</p>
+                      <h3 className={`font-serif font-bold text-[16px] ${isLightMode ? "text-[#111116]" : "text-white"}`}>{p.title}</h3>
+                      <p className={`text-[12px] font-medium ${isLightMode ? "text-[#6F6B66]" : "text-white/45"}`}>{p.type}</p>
                     </div>
-                    <button className="text-[12px] text-purple-400 hover:text-purple-300">Full View →</button>
+                    <button className="text-[12px] font-bold text-[#B89B5E] hover:underline">Full View →</button>
                   </div>
                 </div>
               ))}
-              <button className="glass rounded-3xl border-2 border-dashed border-white/15 h-64 flex flex-col items-center justify-center gap-3 text-white/40 hover:text-white/70 hover:border-white/30 transition-all">
-                <div className="text-4xl">+</div>
-                <span className="text-[13px]">Add Portfolio Item</span>
+              <button className={`rounded-3xl border-2 border-dashed h-64 flex flex-col items-center justify-center gap-3 transition-all ${
+                isLightMode ? "bg-[#F7F4EE] border-[#DED9CF] text-[#6F6B66] hover:text-[#111116] hover:border-[#B89B5E]" : "bg-[#151522] border-white/15 text-white/40 hover:text-white/70 hover:border-white/30"
+              }`}>
+                <div className="text-4xl text-[#B89B5E]">+</div>
+                <span className="text-[13px] font-bold">Add Portfolio Item</span>
               </button>
             </div>
           </div>
@@ -277,15 +305,23 @@ export default function VendorDashboard() {
                 { id: "BOT002", product: "Logo Cups (Set of 200)", qty: 200, status: "delivered", amount: 6200 },
                 { id: "BOT003", product: "Tissue Packs — Branded", qty: 1000, status: "pending", amount: 12000 },
               ].map((o) => (
-                <div key={o.id} className="glass rounded-2xl p-5 border border-white/10">
-                  <div className="font-mono text-[11px] text-white/35 mb-2">{o.id}</div>
-                  <h3 className="font-600 text-[14px] text-white mb-1">{o.product}</h3>
-                  <p className="text-white/50 text-[12px] mb-3">Qty: {o.qty}</p>
+                <div key={o.id} className={`rounded-2xl p-5 border ${
+                  isLightMode ? "bg-white border-[#DED9CF] text-[#111116]" : "bg-[#151522] border-white/10"
+                }`}>
+                  <div className={`font-mono text-[11px] font-bold mb-2 ${isLightMode ? "text-[#6F6B66]" : "text-white/35"}`}>{o.id}</div>
+                  <h3 className={`font-serif font-bold text-[16px] mb-1 ${isLightMode ? "text-[#111116]" : "text-white"}`}>{o.product}</h3>
+                  <p className={`text-[12px] font-medium mb-3 ${isLightMode ? "text-[#6F6B66]" : "text-white/50"}`}>Qty: {o.qty}</p>
                   <div className="flex items-center justify-between">
-                    <span className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${o.status === "delivered" ? "status-complete" : o.status === "printing" ? "status-progress" : "status-new"}`}>
+                    <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${
+                      o.status === "delivered" 
+                        ? "bg-emerald-500/10 text-emerald-600 border border-emerald-500/30" 
+                        : o.status === "printing" 
+                          ? "bg-sky-500/10 text-sky-600 border border-sky-500/30" 
+                          : "bg-amber-500/10 text-amber-600 border border-amber-500/30"
+                    }`}>
                       {o.status}
                     </span>
-                    <span className="text-green-400 font-semibold text-[13px]">₹{o.amount.toLocaleString()}</span>
+                    <span className="text-[#B89B5E] font-serif font-bold text-[15px]">₹{o.amount.toLocaleString()}</span>
                   </div>
                 </div>
               ))}
